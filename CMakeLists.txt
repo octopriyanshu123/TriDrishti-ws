@@ -13,4 +13,4 @@ project(TriDrishti LANGUAGES CXX)
 # add_subdirectory(src/stepper_motor)
 
 
-add_executable(robot src/main.cpp)
+add_executable(robot src/main.cpp src/robot.cpp)

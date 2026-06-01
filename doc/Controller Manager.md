@@ -70,3 +70,25 @@ So in your code: **controllers own devices, the manager owns controllers.**
 [[Linear Actuator Controller]]
 
 
+
+
+WHEN WE STARTY THE rOBOT ONLY oNE PROGRAM START 
+
+
+# ControllerManager Api 
+For the Manual and Auto Mode
+
+
+| ControllerManager.init()      | Stm.init() | Fock New Process |
+| ----------------------------- | ---------- | ---------------- |
+|                               |            |                  |
+|                               |            |                  |
+|                               |            |                  |
+|                               |            |                  |
+|                               |            |                  |
+|                               |            |                  |
+|                               |            |                  |
+|                               |            |                  |
+| ControllerManager.shutdown(); |            |                  |
+
+

@@ -15,7 +15,7 @@ Enabled
 Running
 Fault
 Recovering 
-Disconnected CLone the connecteion 
+Disconnected close the connecteion 
 Shutdown Kill the Created Program 
 ```
 
@@ -39,7 +39,7 @@ ServoMotor
 LinearActuator
 Encoder
 Camera
-IMU
+IMUo
 LaserProfiler
 ProximitySensor
 ```

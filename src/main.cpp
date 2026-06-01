@@ -1,4 +1,4 @@
-#include "Controllers/linearActuatorControllers.cpp"
+#include "robot.cpp"
 
 #include <atomic>
 #include <csignal>
@@ -12,37 +12,9 @@ void signalHandler(int signal)
     if (signal == SIGINT)
     {
         std::cout << "\n[main] Ctrl+C received. Shutting down...\n";
-        running = false;
+        running = false;  // ← was missing!
     }
 }
-
-class Robot
-{
-public:
-    Robot() = default;
-    ~Robot()
-    {
-        std::cout << "[Robot] Cleanup complete\n";
-    }
-
-    void run()
-    {
-        spin();
-        while (running)
-        {
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-        }
-    }
-
-private:
-    void spin()
-    {
-        ControllerManager manager(program_path);
-    }
-
-    std::string program_path =
-        "/home/octo/Github/TriDrishti-ws/Sensors/build/linearActuator";
-};
 
 int main(int argc, char *argv[])
 {
@@ -50,6 +22,7 @@ int main(int argc, char *argv[])
 
     Robot robot;
     robot.run();
+
     std::cout << "[main] Exiting gracefully\n";
     return 0;
 }

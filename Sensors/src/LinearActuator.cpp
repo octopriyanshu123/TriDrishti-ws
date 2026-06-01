@@ -1,15 +1,5 @@
 #include "LinearActuator.hpp"
 
-// ---------------------------------------------------------------------------
-// NOTE: modbusWrite* / modbusReadFeedback are stubs.
-// Replace their bodies with your actual ModBus RTU implementation
-// (libmodbus, custom UART driver, etc.) targeting the STM layer at
-// 115200 baud.
-// ---------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------
-// Construction / Destruction
-// ---------------------------------------------------------------------------
 
 LinearActuator::LinearActuator(int device_id)
     : device_id_(device_id)
@@ -232,7 +222,7 @@ int main() {
     std::strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", std::localtime(&now));
  
     // Append to log file
-    std::ofstream log("/home/octo/log/linearactuator.txt", std::ios::app);
+    std::ofstream log("/home/octobot/log/linearactuator.txt", std::ios::app);
     if (!log.is_open()) {
         std::cerr << "Failed to open log file.\n";
         return 1;

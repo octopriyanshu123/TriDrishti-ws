@@ -528,6 +528,7 @@ const char* rcf::goalStatusStr(rcf::GoalStatus s);    // "SUCCEEDED" etc.
 - `ActionClient::sendGoal()` is non-blocking — it returns a handle immediately and waits for the result in a background thread.
 - For text fields use a fixed-size char array (`char data[64]`) not `std::string`.
 
+```
 spin()
 │
 ├── Guard — throws if bind() was never called
@@ -556,3 +557,8 @@ spin()
         [main loop goes back to accept() — waits for next client]
 │
 └── srv_->close()    ← runs when running_ becomes false
+
+
+
+```
+
