@@ -72,23 +72,21 @@ So in your code: **controllers own devices, the manager owns controllers.**
 
 
 
-WHEN WE STARTY THE rOBOT ONLY oNE PROGRAM START 
-
+When Start The Robot Only One Program Start
 
 # ControllerManager Api 
 For the Manual and Auto Mode
 
-
-| ControllerManager.init()      | Stm.init() | Fock New Process |
-| ----------------------------- | ---------- | ---------------- |
-|                               |            |                  |
-|                               |            |                  |
-|                               |            |                  |
-|                               |            |                  |
-|                               |            |                  |
-|                               |            |                  |
-|                               |            |                  |
-|                               |            |                  |
-| ControllerManager.shutdown(); |            |                  |
+| ControllerManager.Start()     | Stm.Start() |                        |     | Fock New Process       |
+| ----------------------------- | ----------- | ---------------------- | --- | ---------------------- |
+| ControllerManager.init()      | Stm.init()  | LinearActuator.init()  |     | LinearActuator.init()  |
+|                               |             | StepperMotor.init()    |     | StepperMotor.init()    |
+|                               |             | ProximitySensor.init() |     | ProximitySensor.init() |
+|                               |             |                        |     |                        |
+| ControllerManager.            |             |                        |     |                        |
+|                               |             |                        |     |                        |
+|                               |             |                        |     |                        |
+|                               |             |                        |     |                        |
+| ControllerManager.shutdown(); |             |                        |     |                        |
 
 

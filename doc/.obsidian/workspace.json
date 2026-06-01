@@ -33,8 +33,7 @@
               "title": "Controller Manager"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -91,7 +90,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "5e5060e84dc66fcd",
@@ -195,17 +195,17 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "db7f0372a1e9476c",
+  "active": "f39dcf63df644d5e",
   "lastOpenFiles": [
-    "Excalidraw/Robot_FlowChart.md",
     "Controller Manager.md",
+    "Lifecycle Base Class.md",
+    "Hardware Abstraction Layer.md",
+    "State Manager.md",
+    "Excalidraw/Robot_FlowChart.md",
     "RCF Robot Control Flow.md",
     "Linear Actuator Controller.md",
-    "Hardware Abstraction Layer.md",
-    "Lifecycle Base Class.md",
     "Pasted Image 20260528235623_624.png",
     "Robot Interfeace.md",
-    "State Manager.md",
     "Excalidraw/Hardware Abstraction Layer.md",
     "Excalidraw/Lifecycle Base Class.md",
     "Excalidraw/Controller Manager.md",
