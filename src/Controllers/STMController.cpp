@@ -53,79 +53,79 @@ private:
     pid_t stm_pid_;
     int pipe_write_fd_;
 
-    LinearActuatorController lac;
-    ProximityController psc;
-    StepperController smc;
+    // LinearActuatorController lac;
+    // ProximityController psc;
+    // StepperController smc;
     
 };
 
-class LinearActuatorController
-{
-public:
-    explicit LinearActuatorController(STMController &stm) : stm_(stm) {}
+// class LinearActuatorController
+// {
+// public:
+//     explicit LinearActuatorController(STMController &stm) : stm_(stm) {}
 
-    void init()
-    {
-        std::cout << "  [LinearActuator] init()\n";
-    }
+//     void init()
+//     {
+//         std::cout << "  [LinearActuator] init()\n";
+//     }
 
-    void set_position(double mm)
-    {
-        std::ostringstream cmd;
-        cmd << "LINEAR_ACTUATOR SET_POSITION " << mm;
-        stm_.send_command(cmd.str());
-    }
+//     void set_position(double mm)
+//     {
+//         std::ostringstream cmd;
+//         cmd << "LINEAR_ACTUATOR SET_POSITION " << mm;
+//         stm_.send_command(cmd.str());
+//     }
 
-    void stop()
-    {
-        stm_.send_command("LINEAR_ACTUATOR STOP");
-    }
+//     void stop()
+//     {
+//         stm_.send_command("LINEAR_ACTUATOR STOP");
+//     }
 
-private:
-};
+// private:
+// };
 
-class StepperController
-{
-public:
-    explicit StepperController(STMController &stm) : stm_(stm) {}
+// class StepperController
+// {
+// public:
+//     explicit StepperController(STMController &stm) : stm_(stm) {}
 
-    void init()
-    {
-        std::cout << "  [Stepper] init()\n";
-    }
+//     void init()
+//     {
+//         std::cout << "  [Stepper] init()\n";
+//     }
 
-    void move_steps(int steps, int rpm)
-    {
-        std::ostringstream cmd;
-        cmd << "STEPPER MOVE " << steps << " " << rpm;
-        stm_.send_command(cmd.str());
-    }
+//     void move_steps(int steps, int rpm)
+//     {
+//         std::ostringstream cmd;
+//         cmd << "STEPPER MOVE " << steps << " " << rpm;
+//         stm_.send_command(cmd.str());
+//     }
 
-    void stop()
-    {
-        stm_.send_command("STEPPER STOP");
-    }
+//     void stop()
+//     {
+//         stm_.send_command("STEPPER STOP");
+//     }
 
-private:
-};
+// private:
+// };
 
-class ProximityController
-{
-public:
-    explicit ProximityController(STMController &stm) : stm_(stm) {}
+// class ProximityController
+// {
+// public:
+//     explicit ProximityController(STMController &stm) : stm_(stm) {}
 
-    void init()
-    {
-        std::cout << "  [Proximity] init()\n";
-    }
+//     void init()
+//     {
+//         std::cout << "  [Proximity] init()\n";
+//     }
 
-    double read_distance_mm()
-    {
-        stm_.send_command("PROXIMITY READ");
-        // Real code: read response from driver via response pipe / shared memory
-        double val = 42.0; // placeholder
-        return val;
-    }
+//     double read_distance_mm()
+//     {
+//         stm_.send_command("PROXIMITY READ");
+//         // Real code: read response from driver via response pipe / shared memory
+//         double val = 42.0; // placeholder
+//         return val;
+//     }
 
-private:
-};
+// private:
+// };
