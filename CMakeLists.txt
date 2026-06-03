@@ -36,6 +36,8 @@ set(ROBOT_SOURCES
     src/Controllers/STMController.cpp
     src/Controllers/ProcessManager.cpp
 
+    src/State/Logger.cpp
+
 )
 
 

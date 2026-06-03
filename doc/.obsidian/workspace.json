@@ -4,12 +4,39 @@
     "type": "split",
     "children": [
       {
-        "id": "f5fc559c44d1572d",
+        "id": "3136afc3e82fd62c",
         "type": "tabs",
-        "dimension": 25.53304904051173,
         "children": [
           {
-            "id": "3a3bfdb95d16a34f",
+            "id": "b916a314b16a9205",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "State/Logger.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Logger"
+            }
+          },
+          {
+            "id": "c56d599080eb87b7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "State/State Manager.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "State Manager"
+            }
+          },
+          {
+            "id": "9b86ae19e51fac92",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -21,40 +48,21 @@
               "icon": "lucide-file",
               "title": "Robot Interfeace"
             }
-          }
-        ]
-      },
-      {
-        "id": "ad2957acf8014d30",
-        "type": "tabs",
-        "dimension": 74.46695095948827,
-        "children": [
+          },
           {
-            "id": "79646f05fef2326c",
+            "id": "96d1446639e0b914",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "Excalidraw/UI_FlowChart.md"
+                "file": "Excalidraw Control Flow/UI_FlowChart.md"
               },
               "icon": "excalidraw-icon",
               "title": "UI_FlowChart"
             }
-          },
-          {
-            "id": "db7f0372a1e9476c",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "Pasted Image 20260528235623_624.png"
-              },
-              "icon": "lucide-image",
-              "title": "Pasted Image 20260528235623_624"
-            }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -86,7 +94,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "teleop",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -111,8 +119,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "5e5060e84dc66fcd",
@@ -128,6 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Robot Interfeace.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -137,7 +145,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Backlinks for Robot Interfeace"
             }
           },
           {
@@ -201,8 +209,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -216,27 +223,39 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "db7f0372a1e9476c",
+  "active": "9b86ae19e51fac92",
   "lastOpenFiles": [
-    "Pasted Image 20260602140550_526.png",
+    "Excalidraw Control Flow/UI_FlowChart.md",
     "Robot Interfeace.md",
-    "Excalidraw/Robot_FlowChart.md",
-    "Excalidraw/UI_FlowChart.md",
-    "State Manager.md",
-    "TF Trail.md",
-    "Linear Actuator Controller.md",
-    "Lifecycle Base Class.md",
-    "Pasted Image 20260528235623_624.png",
-    "RCF Robot Control Flow.md",
+    "State/State Manager.md",
+    "Excalidraw Control Flow/Robot_FlowChart.md",
+    "todo.md",
+    "State/Logger.md",
+    "Untitled",
+    "Operations/Behaviour Tree.md",
+    "Operations/Teleop.md",
+    "Excalidraw Control Flow/Pasted Image 20260528235623_624.png",
+    "Excalidraw Control Flow/Pasted Image 20260602140550_526.png",
+    "HAL",
+    "RobotFramework",
+    "State",
+    "i2w",
+    "Controllers",
+    "Operations",
+    "Untitled.base",
+    "Controllers/Controller Manager.md",
+    "State/TF Trail.md",
+    "Controllers/Linear Actuator Controller.md",
+    "HAL/Lifecycle Base Class.md",
+    "RobotFramework/RCF Robot Control Flow.md",
     "Excalidraw/Drawing 2026-06-02 10.27.06.excalidraw.md",
-    "Controller Manager.md",
-    "Hardware Abstraction Layer.md",
+    "HAL/Hardware Abstraction Layer.md",
     "Excalidraw/Hardware Abstraction Layer.md",
     "Excalidraw/Lifecycle Base Class.md",
     "Excalidraw/Controller Manager.md",
     "Excalidraw/Linear Actuator Controller.md",
     "Excalidraw/Drawing 2026-05-28 21.19.03.excalidraw.md",
-    "Excalidraw",
+    "Excalidraw Control Flow",
     "Welcome.md"
   ]
 }
