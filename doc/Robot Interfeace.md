@@ -59,9 +59,6 @@ robot.btResume()
 robot.btStart();
 robot.btAbout():
 robot.inspectionToggleOperatioMode()
-
-
-
 # Operator Point of View
 
 Step 0 

@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "State/State Manager.md",
+                "file": "HAL/STM.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "State Manager"
+              "title": "STM"
             }
           },
           {
@@ -62,7 +62,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -94,7 +94,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "teleop",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -135,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Robot Interfeace.md",
+                "file": "HAL/STM.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -145,7 +145,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Robot Interfeace"
+              "title": "Backlinks for STM"
             }
           },
           {
@@ -209,7 +209,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -223,18 +224,20 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "9b86ae19e51fac92",
+  "active": "c56d599080eb87b7",
   "lastOpenFiles": [
-    "Excalidraw Control Flow/UI_FlowChart.md",
-    "Robot Interfeace.md",
-    "State/State Manager.md",
-    "Excalidraw Control Flow/Robot_FlowChart.md",
-    "todo.md",
-    "State/Logger.md",
+    "State/TF Trail.md",
+    "HAL/STM.md",
     "Untitled",
+    "Excalidraw Control Flow/Robot_FlowChart.md",
+    "Excalidraw Control Flow/UI_FlowChart.md",
+    "State/State Manager.md",
+    "State/Logger.md",
+    "Robot Interfeace.md",
+    "Excalidraw Control Flow/Pasted Image 20260528235623_624.png",
+    "todo.md",
     "Operations/Behaviour Tree.md",
     "Operations/Teleop.md",
-    "Excalidraw Control Flow/Pasted Image 20260528235623_624.png",
     "Excalidraw Control Flow/Pasted Image 20260602140550_526.png",
     "HAL",
     "RobotFramework",
@@ -244,7 +247,6 @@
     "Operations",
     "Untitled.base",
     "Controllers/Controller Manager.md",
-    "State/TF Trail.md",
     "Controllers/Linear Actuator Controller.md",
     "HAL/Lifecycle Base Class.md",
     "RobotFramework/RCF Robot Control Flow.md",

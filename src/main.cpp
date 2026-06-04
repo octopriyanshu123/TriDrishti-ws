@@ -31,8 +31,38 @@ int main()
     LOG_INFO("Main", "Robot initialised");
     LOG_WARNING("MotorController", "Left encoder jitter detected");
     LOG_ERROR("PowerModule", "Battery voltage critical");
+ // Load the settings from a JSON file (if it exists)
+    RobotStateData state;
+    loadJSON(state, "robot_state_test.json");
+    printState(state);
+
+    state.lastUpdatedAt = nowISO();
+
+    state.connection.state = RobotConnectionState::FULLY_CONNECTED;
+    state.connection.orinConnected = true;
+    state.connection.ndtConnected = true;
+    state.runState = RobotRunState::INITIALISED;
+    state.sensors.lidar.initialised = true;
+    state.sensors.lidar.calibrated = true;
+    state.sensors.imu.initialised = true;
+    state.sensors.imu.calibrated = true;
+    state.sensors.wheel.initialised = true;
+    state.sensors.wheel.calibrated = true;
+    state.sensors.laserProfiling.initialised = true;
+    state.sensors.laserProfiling.calibrated = true;
+    state.sensors.stm.initialised = true;
+    state.sensors.stm.calibrated = true;
+    state.sensors.allCalibrated = true;
+    state.ndt.gain = 1.5f;
+    state.ndt.voltage = 12.0f;
+    state.ndt.filterId = 2;
+    state.inspection.surface = InspectionSurface::PIPE;
+    const std::string outFile = "robot_state_test.json";
+    printState(state);
+    saveJSON(state, outFile);
 
     Robot robot;
     robot.run();
     return 0;
 }
+

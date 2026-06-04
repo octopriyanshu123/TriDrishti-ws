@@ -391,8 +391,7 @@ static InspectionSurface parseSurface(const std::string& v) {
     return InspectionSurface::FLAT;
 }
 
-static void parseSensorFlags(const std::string& block,
-                              RobotStateData::SensorFlags& f)
+static void parseSensorFlags(const std::string& block,RobotStateData::SensorFlags& f)
 {
     f.initialised = parseBool(jsonValue(block, "initialised"));
     f.bypassed    = parseBool(jsonValue(block, "bypassed"));
