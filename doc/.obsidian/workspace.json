@@ -48,6 +48,18 @@
             }
           },
           {
+            "id": "c1007b8fc813df5a",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "DIgitalTwin/Drawing 2026-06-05 13.00.07.excalidraw.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Drawing 2026-06-05 13.00.07.excalidraw"
+            }
+          },
+          {
             "id": "96d1446639e0b914",
             "type": "leaf",
             "state": {
@@ -60,7 +72,7 @@
             }
           }
         ],
-        "currentTab": 2
+        "currentTab": 3
       }
     ],
     "direction": "vertical"
@@ -222,17 +234,20 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "9b86ae19e51fac92",
+  "active": "c1007b8fc813df5a",
   "lastOpenFiles": [
-    "todo.md",
+    "Pasted Image 20260605160602_194.png",
+    "Excalidraw Control Flow/UI_FlowChart.md",
     "DIgitalTwin/Mobile Robot Kinematics.md",
+    "DIgitalTwin/Drawing 2026-06-05 13.00.07.excalidraw.md",
+    "DIgitalTwin/TF.md",
+    "todo.md",
     "DIgitalTwin",
     "DIgitalTwin/Mobile Robot Kinematics",
     "Robot Interfeace.md",
     "Controllers/Controller Manager.md",
     "Controllers/Linear Actuator Controller.md",
     "HAL/Leaser Profiling Sensor.md",
-    "Excalidraw Control Flow/UI_FlowChart.md",
     "Excalidraw Control Flow/Robot_FlowChart.md",
     "State/State Manager.md",
     "State/Logger.md",
@@ -258,8 +273,6 @@
     "Excalidraw/Hardware Abstraction Layer.md",
     "Excalidraw/Lifecycle Base Class.md",
     "Excalidraw/Controller Manager.md",
-    "Excalidraw/Linear Actuator Controller.md",
-    "Excalidraw/Drawing 2026-05-28 21.19.03.excalidraw.md",
-    "Welcome.md"
+    "Excalidraw/Linear Actuator Controller.md"
   ]
 }
