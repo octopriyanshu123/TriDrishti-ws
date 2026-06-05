@@ -49,17 +49,17 @@ public:
     //   HALF_SPAN = AXLE_L/2 + TYRE_T/2
     //             = 0.99/2   + 0.20/2   = 0.595
     static constexpr float HALF_SPAN = 0.595f;
-    static constexpr float WHEELBASE = 1.19f;   // centre-to-centre
+    static constexpr float WHEELBASE = 1.19f; // centre-to-centre
 
     // ── parts ────────────────────────────────────────────────
-    Wheel leftWheel  { false };
-    Wheel rightWheel { true  };
-    Base  base;
+    Wheel leftWheel{false};
+    Wheel rightWheel{true};
+    Base base;
 
     // ── world pose ───────────────────────────────────────────
-    float x   = 0.f;   // world X position
-    float z   = 0.f;   // world Z position
-    float yaw = 0.f;   // heading (rad), 0 = +X direction
+    float x = 0.f;   // world X position
+    float z = 0.f;   // world Z position
+    float yaw = 0.f; // heading (rad), 0 = +X direction
 
     // ── interface ────────────────────────────────────────────
     void setSpeed(float leftDeg, float rightDeg)
@@ -67,7 +67,11 @@ public:
         leftWheel.setSpeed(leftDeg);
         rightWheel.setSpeed(rightDeg);
     }
-    void stop()  { leftWheel.stop();  rightWheel.stop(); }
+    void stop()
+    {
+        leftWheel.stop();
+        rightWheel.stop();
+    }
 
     void reset()
     {
@@ -80,15 +84,15 @@ public:
     void update()
     {
         const float toRad = (float)M_PI / 180.f;
-        float dL = leftWheel.speedDeg  * toRad * Wheel::TYRE_R;
+        float dL = leftWheel.speedDeg * toRad * Wheel::TYRE_R;
         float dR = rightWheel.speedDeg * toRad * Wheel::TYRE_R;
 
-        float arc   = (dL + dR) * 0.5f;
+        float arc = (dL + dR) * 0.5f;
         float omega = (dR - dL) / WHEELBASE;
 
         yaw += omega;
-        x   += arc * cosf(yaw);
-        z   += arc * sinf(yaw);
+        x += arc * cosf(yaw);
+        z += arc * sinf(yaw);
 
         leftWheel.update();
         rightWheel.update();
@@ -97,38 +101,34 @@ public:
     // ── draw ─────────────────────────────────────────────────
     void draw() const
     {
-        // apply world pose  (translate + yaw around Y)
-        glPushMatrix();
-        // glTranslatef(x, 0.f, z);
-        // glRotatef(yaw * 180.f / (float)M_PI, 0, 1, 0);
+        glPushMatrix(); 
+        base.draw();
+        glTranslatef(0,0,0);
+        glRotatef(180.f, 0, 0, 1);   // stand wheel upright
+        leftWheel.draw(0);      // draws wheel HERE
+        glPopMatrix();                 // RESTORE: back to Robot position
 
-        drawBase();
-
-
-        
-        drawLeftWheel();
-        drawRightWheel();
-
-        glPopMatrix();
+        glPopMatrix(); // RESTORE
     }
 
 private:
-    // ── Base: rotate so Base-X (outward) → world-Y (up) ─────
     //   glRotatef(-90, 0,0,1):  Base X→Y,  Base Y→-X,  Base Z→Z
     //   then shift up by BASE_T/2 so bottom face sits on Y=0
     void drawBase() const
     {
         glPushMatrix();
-        // glTranslatef(0.f, Base::BASE_T * 0.5f, 0.f);
-        // glRotatef(-90.f, 0, 0, 1);
-        base.draw();
 
+        base.draw();
+        glTranslatef(0.f, 0.5f, 0.f);
+        glRotatef(-90.f, 0, 0, 1);
+        leftWheel.draw(0);
+        rightWheel.draw(1);
         glPopMatrix();
     }
 
     // ── Wheel: rotate 90° around X so tyre stands upright ───
     //   Wheel default: disk in XY plane, axle along Z.
-    //   After RotateX(90°): disk in XZ plane, axle along -Y … 
+    //   After RotateX(90°): disk in XZ plane, axle along -Y …
     //   We need axle along Z and tyre rim touching Y=0.
     //   Solution: RotateX(-90°) → disk stands vertical in XZ,
     //   tyre bottom at Y=0 when translated to Y=TYRE_R.
@@ -145,7 +145,7 @@ private:
     void drawRightWheel() const
     {
         glPushMatrix();
-        glTranslatef(0.f, Wheel::TYRE_R,  HALF_SPAN);
+        glTranslatef(0.f, Wheel::TYRE_R, HALF_SPAN);
         // glRotatef(-90.f, 1, 0, 0);   // stand wheel upright
         rightWheel.draw(1);
         glPopMatrix();
