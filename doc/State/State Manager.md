@@ -1,4 +1,6 @@
 
+Save the Status OF the Robot in the Json
+
 ```json
 {
 
@@ -9,6 +11,8 @@
 "connection": {
 
 "state": "FULLY_CONNECTED",
+
+
 
 "orinConnected": true,
 
