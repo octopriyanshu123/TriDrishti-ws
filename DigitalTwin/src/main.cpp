@@ -48,9 +48,9 @@ void updateCylinderPose(
     p.y = p.height;
     p.z = radius * sin(p.theta);
 
-    p.roll = 0.0;
-    p.pitch = 90.0;
-    p.yaw = p.theta * 180.0 / M_PI;
+    // p.roll = 0.0;
+    // p.pitch = 90.0;
+    // p.yaw = p.theta * 180.0 / M_PI;
 }
 
 // ── window ───────────────────────────────────────────────────
@@ -183,8 +183,8 @@ void drawSpot()
     tf.apply();
 
     spotPose.yaw = spotPose.theta * 180.0 / M_PI;
-    spotPose.pitch = 0;
-    spotPose.roll = 0;
+    // spotPose.pitch = 0;
+    // spotPose.roll = 0;
 
     Transform tf_spot_perprndicular_to_tank;
     tf_spot_perprndicular_to_tank.set(
@@ -192,7 +192,7 @@ void drawSpot()
         0,
         0,
         spotPose.roll,
-        spotPose.pitch,
+        spotPose.pitch * 180.0 / M_PI,
         spotPose.yaw);
     tf_spot_perprndicular_to_tank.apply();
 
@@ -304,35 +304,43 @@ static void updatePoseFromJoystick()
 
     robotPose.yaw += angular_vel * dt;
 
-    // Spot
+    
 
-    spotPose.theta -=
-        (linear_vel / Tank::CYL_R) * dt;
+    spotPose.pitch += angular_vel*dt;
 
-    spotPose.height +=
-        angular_vel * dt;
+    // Forward motion projected onto cylinder coordinates
+    double ds =
+        linear_vel *
+        std::cos(spotPose.pitch) *
+        dt;
 
+    double dh =
+        linear_vel *
+        std::sin(spotPose.pitch) *
+        dt;
+
+    // Move around circumference
+    spotPose.theta -= ds / Tank::CYL_R;
+
+    // Move vertically
+    spotPose.height += dh;
+
+    // Limits
     if (spotPose.height < 0.0)
         spotPose.height = 0.0;
 
     if (spotPose.height > Tank::CYL_H)
         spotPose.height = Tank::CYL_H;
 
+    // Recompute Cartesian position
     updateCylinderPose(
         spotPose,
         Tank::CYL_R);
 
     std::cout
         << "\rTheta: " << theta * 57.2958
+        << "spotPose.roll" << spotPose.pitch
         << std::flush;
-    // std::cout
-    //     << "\rX: " << robotPose.x
-    //     << "  Y: " << robotPose.y
-    //     << "  Yaw: " << robotPose.yaw
-    //     << "  V: " << linear_vel
-    //     << "  W: " << angular_vel
-    //     << "      "
-    //     << std::flush;
 }
 
 static void idle()
