@@ -12,7 +12,6 @@
 #include "core/FlatRobot.cpp"
 #include "core/Pose.cpp"
 
-
 static int js_fd = -1;
 static float axis[8] = {0};
 static std::chrono::steady_clock::time_point lastTime;
@@ -21,10 +20,38 @@ GLUquadric *quad = NULL;
 static double theta = 1.0;
 static double height = 2.0;
 
+struct CylindercalPose
+{
+    // cylindrical coordinates
+    double theta = 0.0;
+    double height = 0.0;
+
+    // cartesian coordinates
+    double x = 0.0;
+    double y = 0.0;
+    double z = 0.0;
+
+    // orientation
+    double roll = 0.0;
+    double pitch = 0.0;
+    double yaw = 0.0;
+};
+
 static Pose robotPose;
-static Pose spotPose;
+static CylindercalPose spotPose;
 
+void updateCylinderPose(
+    CylindercalPose &p,
+    float radius)
+{
+    p.x = radius * cos(p.theta);
+    p.y = p.height;
+    p.z = radius * sin(p.theta);
 
+    p.roll = 0.0;
+    p.pitch = 90.0;
+    p.yaw = p.theta * 180.0 / M_PI;
+}
 
 // ── window ───────────────────────────────────────────────────
 static int W = 1280, H = 800;
@@ -127,24 +154,22 @@ void drawLineToSpot(float x, float y, float z)
     glColor3f(1.0f, 1.0f, 1.0f);
 
     glBegin(GL_LINES);
-        glVertex3f(0.0f, height, 0.0f);
-        glVertex3f(x, y, z);
+    glVertex3f(0.0f, height, 0.0f);
+    glVertex3f(x, y, z);
     glEnd();
 
     glPopAttrib();
 }
 
-
 // DrawSpot
 void drawSpot()
 {
-    float x = Tank::CYL_R * cos(theta);
-    float z = Tank::CYL_R * sin(theta);
-    float y = height;
-
+    float x = spotPose.x;
+    float y = spotPose.y;
+    float z = spotPose.z;
     glPushMatrix();
 
-        drawLineToSpot(x, y, z);
+    drawLineToSpot(x, y, z);
 
     glTranslatef(x, y, z);
 
@@ -157,9 +182,18 @@ void drawSpot()
     tf.set(0, 0, 0, 0, 90, -90);
     tf.apply();
 
+    spotPose.yaw = spotPose.theta * 180.0 / M_PI;
+    spotPose.pitch = 0;
+    spotPose.roll = 0;
 
- Transform tf_spot_perprndicular_to_tank;
-    tf_spot_perprndicular_to_tank.set(0, 0, 0, 0, 0 ,(theta * 180.0f / M_PI));
+    Transform tf_spot_perprndicular_to_tank;
+    tf_spot_perprndicular_to_tank.set(
+        0,
+        0,
+        0,
+        spotPose.roll,
+        spotPose.pitch,
+        spotPose.yaw);
     tf_spot_perprndicular_to_tank.apply();
 
     Axis("Spot", 1.0f).draw();
@@ -168,7 +202,6 @@ void drawSpot()
 
     glPopMatrix();
 }
-
 
 // drawRobot
 static void drawRobot()
@@ -180,11 +213,11 @@ static void drawRobot()
     robotTf.set(
         static_cast<float>(robotPose.x), // X
         static_cast<float>(robotPose.y), // Z
-        0.0f,                       // Z
+        0.0f,                            // Z
 
-        0.0f,                                        // roll
+        0.0f,                                             // roll
         static_cast<float>(robotPose.yaw * 180.0 / M_PI), // pitch (Y axis)
-        0.0f                                         // yaw
+        0.0f                                              // yaw
     );
 
     robotTf.apply();
@@ -266,21 +299,31 @@ static void updatePoseFromJoystick()
     double angular_vel = -axis[2];
 
     robotPose.x += linear_vel * std::cos(robotPose.yaw) * dt;
-    theta -= (linear_vel / Tank::CYL_R) * dt;
 
     robotPose.y += linear_vel * std::sin(robotPose.yaw) * dt;
-    height += angular_vel * dt;
 
     robotPose.yaw += angular_vel * dt;
 
-    if (height < 0.0)
-        height = 0.0;
+    // Spot
 
-    if (height > Tank::CYL_H)
-        height = Tank::CYL_H;
+    spotPose.theta -=
+        (linear_vel / Tank::CYL_R) * dt;
 
-        std::cout
-        << "\rTheta: " << theta*57.2958
+    spotPose.height +=
+        angular_vel * dt;
+
+    if (spotPose.height < 0.0)
+        spotPose.height = 0.0;
+
+    if (spotPose.height > Tank::CYL_H)
+        spotPose.height = Tank::CYL_H;
+
+    updateCylinderPose(
+        spotPose,
+        Tank::CYL_R);
+
+    std::cout
+        << "\rTheta: " << theta * 57.2958
         << std::flush;
     // std::cout
     //     << "\rX: " << robotPose.x
