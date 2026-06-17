@@ -12,9 +12,12 @@
 //  The wheel can ONLY spin around its own Z axis.
 //  Spin is driven externally by Robot via setSpeed().
 // ============================================================
+#pragma once
+
 #include <GL/glut.h>
 #include <cmath>
 #include "Axis.cpp"
+
 
 class Wheel
 {
@@ -58,9 +61,9 @@ public:
         drawSpokes();
 
         // drawAxes(TYRE_R * 1.8f, isRight);
-        Axis a1("base_link", 1.3f);
-        a1.setOrientation(90.f, 0.f, 0.f); // rotate so X (outward) → Y (up), Y (up) → -X (backward)
-        a1.draw();
+        // Axis a1("base_link", 1.3f);
+        // a1.setOrientation(90.f, 0.f, 0.f); // rotate so X (outward) → Y (up), Y (up) → -X (backward)
+        // a1.draw();
 
         glPopMatrix();
     }

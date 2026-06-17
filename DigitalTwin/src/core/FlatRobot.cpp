@@ -37,6 +37,8 @@
 //    x    += arc * cos(yaw)
 //    z    += arc * sin(yaw)
 // ============================================================
+#pragma once
+
 #include <GL/glut.h>
 #include <cmath>
 #include "Wheel.cpp"
@@ -109,10 +111,34 @@ public:
     //
     void draw() const
     {
+            Axis("Robot", 1.0f).draw();
+
+        Transform robotTf;
+         robotTf.set(
+        0.0f, // X
+        0.0f, // Z
+        0.0f, // Z
+
+        0.0f,                                        // roll
+        90.0f, // pitch (Y axis)
+        0.0f                                         // yaw
+    );
+
+    robotTf.apply();
+      drawRobot() ;
+
+
+    }
+
+      void drawRobot() const
+    {
         drawBase();
         drawLeftWheel();
         drawRightWheel();
     }
+
+
+    
 
 private:
 // ── drawBase ─────────────────────────────────────────────

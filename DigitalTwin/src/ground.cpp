@@ -1,8 +1,3 @@
-// ============================================================
-//  main.cpp
-//  Flat-ground differential drive robot.
-//  Uses:  core/Wheel.cpp  core/Base.cpp  core/FlatRobot.cpp
-// ============================================================
 #include <GL/glut.h>
 #include <cmath>
 #include <cstdio>
@@ -162,9 +157,9 @@ static void display()
     Transform robotTf;
 
     robotTf.set(
-        static_cast<float>(pose.y), // X
-        0.0f,                       // Y
-        static_cast<float>(pose.x), // Z
+        static_cast<float>(pose.x), // X
+        static_cast<float>(pose.y), // Z
+        0.0f, // Z
 
         0.0f,                                        // roll
         static_cast<float>(pose.yaw * 180.0 / M_PI), // pitch (Y axis)
@@ -223,7 +218,7 @@ static void updatePoseFromJoystick()
     lastTime = now;
 
     double linear_vel = -axis[1];
-    double angular_vel = axis[2];
+    double angular_vel = -axis[2];
 
     pose.x += linear_vel *
               std::cos(pose.yaw) * dt;
@@ -361,13 +356,16 @@ int main(int argc, char **argv)
     {
         return 1;
     }
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize(W, H);
     glutCreateWindow("Flat Ground Robot – Base + Wheel classes");
+
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
     glutKeyboardFunc(keyboard);

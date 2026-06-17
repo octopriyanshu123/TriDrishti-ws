@@ -1,77 +1,121 @@
 #include <GL/glut.h>
 #include <cmath>
 #include <cstdio>
+#include <linux/joystick.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <chrono>
+#include <iostream>
 
-#include "core/Tank.cpp"   
-#include "core/Robot.cpp" 
+#include "core/Tank.cpp"
+#include "core/Robot.cpp"
+#include "core/FlatRobot.cpp"
 
-GLUquadric* quad = NULL;
+static int js_fd = -1;
+static float axis[8] = {0};
+static std::chrono::steady_clock::time_point lastTime;
+GLUquadric *quad = NULL;
+struct Pose
+{
+    double x = 0.0;
+    double y = 0.0;
+    double yaw = 0.0;
+};
+
+static Pose pose;
 
 // ── window ───────────────────────────────────────────────────
 static int W = 1280, H = 800;
 
 // ── scene objects ────────────────────────────────────────────
-static Tank  tank;
-static Robot robot;
+static Tank tank;
+static FlatRobot robot;
 
 // ── camera ───────────────────────────────────────────────────
 static float camTheta = 90.f, camPhi = 20.f, camDist = 75.f;
-static int   lastX = 0, lastY = 0;
-static bool  dragging = false;
+static int lastX = 0, lastY = 0;
+static bool dragging = false;
 
 // ── world-frame axis arrows ──────────────────────────────────
 static void drawArrow(float len)
 {
-    GLUquadric* q = gluNewQuadric();
-    gluCylinder(q, 0.08f, 0.08f, len*0.8f, 8, 1);
+    GLUquadric *q = gluNewQuadric();
+    gluCylinder(q, 0.08f, 0.08f, len * 0.8f, 8, 1);
     glPushMatrix();
-      glTranslatef(0,0,len*0.8f);
-      gluCylinder(q, 0.20f, 0.f, len*0.2f, 8, 1);
+    glTranslatef(0, 0, len * 0.8f);
+    gluCylinder(q, 0.20f, 0.f, len * 0.2f, 8, 1);
     glPopMatrix();
     gluDeleteQuadric(q);
 }
 
-void drawTank() {
+void drawTank()
+{
     // Tank body (cylinder)
-    glColor3f(0.5f, 0.5f, 0.6f);  // Steel color
-    gluCylinder(quad, 2.0f, 2.0f, 4.0f, 32, 32); 
-
+    tank.draw();
 }
 static void drawWorldAxes()
 {
     glPushAttrib(GL_LIGHTING_BIT);
     glDisable(GL_LIGHTING);
-    glColor3f(1.f,0.1f,0.1f);
-    glPushMatrix(); glRotatef(90,0,1,0); drawArrow(5.f); glPopMatrix();
-    glColor3f(0.1f,1.f,0.1f);
-    glPushMatrix(); glRotatef(-90,1,0,0); drawArrow(5.f); glPopMatrix();
-    glColor3f(0.2f,0.4f,1.f);
+    glColor3f(1.f, 0.1f, 0.1f);
+    glPushMatrix();
+    glRotatef(90, 0, 1, 0);
+    drawArrow(5.f);
+    glPopMatrix();
+    glColor3f(0.1f, 1.f, 0.1f);
+    glPushMatrix();
+    glRotatef(-90, 1, 0, 0);
+    drawArrow(5.f);
+    glPopMatrix();
+    glColor3f(0.2f, 0.4f, 1.f);
     drawArrow(5.f);
     glPopAttrib();
 }
 
 // ── HUD ──────────────────────────────────────────────────────
-static void drawHUD()
-{
-    char buf[256];
-    snprintf(buf, sizeof(buf),
-        "W/S=fwd/back  A/D=turn  Q/E=spin  R=reset  "
-        "| theta=%.1f  h=%.2f  phi=%.1f deg",
-        robot.theta * 180.f/(float)M_PI,
-        robot.height,
-        robot.phi   * 180.f/(float)M_PI);
+// static void drawHUD()
+// {
+//     char buf[256];
+    
 
-    glMatrixMode(GL_PROJECTION); glPushMatrix(); glLoadIdentity();
-    gluOrtho2D(0, W, 0, H);
-    glMatrixMode(GL_MODELVIEW);  glPushMatrix(); glLoadIdentity();
+//     glMatrixMode(GL_PROJECTION);
+//     glPushMatrix();
+//     glLoadIdentity();
+//     gluOrtho2D(0, W, 0, H);
+//     glMatrixMode(GL_MODELVIEW);
+//     glPushMatrix();
+//     glLoadIdentity();
+//     glDisable(GL_LIGHTING);
+//     glColor3f(0.75f, 0.95f, 0.65f);
+//     glRasterPos2f(10, 10);
+//     for (char *p = buf; *p; p++)
+//         glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *p);
+//     glEnable(GL_LIGHTING);
+//     glPopMatrix();
+//     glMatrixMode(GL_PROJECTION);
+//     glPopMatrix();
+//     glMatrixMode(GL_MODELVIEW);
+// }
+static void drawGrid()
+{
+    glPushAttrib(GL_LIGHTING_BIT);
     glDisable(GL_LIGHTING);
-    glColor3f(0.75f, 0.95f, 0.65f);
-    glRasterPos2f(10, 10);
-    for(char* p = buf; *p; p++) glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *p);
-    glEnable(GL_LIGHTING);
-    glPopMatrix();
-    glMatrixMode(GL_PROJECTION); glPopMatrix();
-    glMatrixMode(GL_MODELVIEW);
+    glBegin(GL_LINES);
+    for (int i = -12; i <= 12; i++)
+    {
+        float f = (float)i;
+        bool maj = (i % 4 == 0);
+        if (maj)
+            glColor4f(.50f, .50f, .52f, .8f);
+        else
+            glColor4f(.28f, .28f, .30f, .4f);
+        glVertex3f(f, 0, -12);
+        glVertex3f(f, 0, 12);
+        glVertex3f(-12, 0, f);
+        glVertex3f(12, 0, f);
+    }
+    glEnd();
+    glPopAttrib();
 }
 
 // ── lighting setup ───────────────────────────────────────────
@@ -82,100 +126,288 @@ static void setupLighting()
     glEnable(GL_LIGHT1);
     glEnable(GL_NORMALIZE);
 
-    GLfloat p0[]={15,20,15,1}, d0[]={1,.95f,.85f,1}, a0[]={.22f,.22f,.22f,1};
-    GLfloat p1[]={-10,10,-10,1}, d1[]={.3f,.4f,.6f,1};
-    glLightfv(GL_LIGHT0,GL_POSITION,p0);
-    glLightfv(GL_LIGHT0,GL_DIFFUSE, d0);
-    glLightfv(GL_LIGHT0,GL_AMBIENT, a0);
-    glLightfv(GL_LIGHT1,GL_POSITION,p1);
-    glLightfv(GL_LIGHT1,GL_DIFFUSE, d1);
+    GLfloat p0[] = {15, 20, 15, 1}, d0[] = {1, .95f, .85f, 1}, a0[] = {.22f, .22f, .22f, 1};
+    GLfloat p1[] = {-10, 10, -10, 1}, d1[] = {.3f, .4f, .6f, 1};
+    glLightfv(GL_LIGHT0, GL_POSITION, p0);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, d0);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, a0);
+    glLightfv(GL_LIGHT1, GL_POSITION, p1);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, d1);
 
-    GLfloat sp[]={.35f,.35f,.35f,1}, sh[]={45};
-    glMaterialfv(GL_FRONT_AND_BACK,GL_SPECULAR, sp);
-    glMaterialfv(GL_FRONT_AND_BACK,GL_SHININESS,sh);
-    glColorMaterial(GL_FRONT_AND_BACK,GL_AMBIENT_AND_DIFFUSE);
+    GLfloat sp[] = {.35f, .35f, .35f, 1}, sh[] = {45};
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, sp);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, sh);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
     glEnable(GL_COLOR_MATERIAL);
+}
+
+// DrawSpot
+void drawSpot()
+{
+    float x = Tank::CYL_R * cos(theta);
+    float z = Tank::CYL_R * sin(theta);
+    float y = height;
+
+    glPushMatrix();
+
+    glTranslatef(x,y,z);
+
+    glDisable(GL_LIGHTING);
+    glColor3f(1,0,0);
+
+    glutSolidSphere(0.05,16,16);
+
+    glEnable(GL_LIGHTING);
+
+    glPopMatrix();
+}
+
+// drawRobot 
+static void drawRobot(){
+    // glPushMatrix();
+
+    Transform robotTf;
+
+    robotTf.set(
+        static_cast<float>(pose.x), // X
+        static_cast<float>(pose.y), // Z
+        0.0f, // Z
+
+        0.0f,                                        // roll
+        static_cast<float>(pose.yaw * 180.0 / M_PI), // pitch (Y axis)
+        0.0f                                         // yaw
+    );
+
+    robotTf.apply();
+
+    robot.draw();
 }
 
 // ── GLUT callbacks ───────────────────────────────────────────
 static void display()
 {
-    glClearColor(0.07f,0.08f,0.10f,1);
-    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glClearColor(0.07f, 0.08f, 0.10f, 1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, (double)W / H, 0.01, 200.0);
+
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    float rT = camTheta * (float)M_PI / 180.f;
+    float rP = camPhi * (float)M_PI / 180.f;
+    gluLookAt(camDist * cosf(rP) * sinf(rT),
+              camDist * sinf(rP),
+              camDist * cosf(rP) * cosf(rT),
+              0, 0, 0, 0, 1, 0);
+
+    glEnable(GL_DEPTH_TEST);
+    setupLighting();
+    drawGrid();
+    Axis("world", 1.0f).draw();
 
     drawTank();
+    drawRobot();
+
     glutSwapBuffers();
 }
+static bool initJoystick()
+{
+    js_fd = open("/dev/input/js0", O_RDONLY | O_NONBLOCK);
+
+    if (js_fd < 0)
+    {
+        std::cout << "Failed to open /dev/input/js0\n";
+        return false;
+    }
+
+    lastTime = std::chrono::steady_clock::now();
+    return true;
+}
+static void updatePoseFromJoystick()
+{
+    js_event event;
+
+    while (read(js_fd, &event, sizeof(event)) > 0)
+    {
+        event.type &= ~JS_EVENT_INIT;
+
+        if (event.type == JS_EVENT_AXIS)
+        {
+            if (event.number < 8)
+            {
+                axis[event.number] =
+                    static_cast<float>(event.value) / 32767.0f;
+            }
+        }
+    }
+
+    auto now = std::chrono::steady_clock::now();
+
+    double dt =
+        std::chrono::duration<double>(
+            now - lastTime)
+            .count();
+
+    lastTime = now;
+
+    double linear_vel = -axis[1];
+    double angular_vel = -axis[2];
+
+    pose.x += linear_vel *
+              std::cos(pose.yaw) * dt;
+
+    pose.y += linear_vel *
+              std::sin(pose.yaw) * dt;
+
+    pose.yaw += angular_vel * dt;
+
+    std::cout
+        << "\rX: " << pose.x
+        << "  Y: " << pose.y
+        << "  Yaw: " << pose.yaw
+        << "  V: " << linear_vel
+        << "  W: " << angular_vel
+        << "      "
+        << std::flush;
+}
+
 
 static void idle()
 {
-    robot.update(Tank::CYL_R, Tank::CYL_H);
+        updatePoseFromJoystick();
+
     glutPostRedisplay();
 }
 
 static void keyboard(unsigned char k, int, int)
 {
     const float SPD = 1.8f;
-    switch(k){
-    case 'w': case 'W': robot.setSpeed( SPD,        SPD       ); break;
-    case 's': case 'S': robot.setSpeed(-SPD,       -SPD       ); break;
-    case 'a': case 'A': robot.setSpeed( SPD*0.2f,   SPD       ); break;
-    case 'd': case 'D': robot.setSpeed( SPD,        SPD*0.2f  ); break;
-    case 'q': case 'Q': robot.setSpeed(-SPD,        SPD       ); break;
-    case 'e': case 'E': robot.setSpeed( SPD,       -SPD       ); break;
-    case 'r': case 'R':
-        robot.reset();
-        camTheta=40; camPhi=20; camDist=30;
+    switch (k)
+    {
+    case 'w':
+    case 'W':
+        robot.setSpeed(SPD, SPD);
         break;
-    case 27: exit(0);
+    case 's':
+    case 'S':
+        robot.setSpeed(-SPD, -SPD);
+        break;
+    case 'a':
+    case 'A':
+        robot.setSpeed(SPD * 0.2f, SPD);
+        break;
+    case 'd':
+    case 'D':
+        robot.setSpeed(SPD, SPD * 0.2f);
+        break;
+    case 'q':
+    case 'Q':
+        robot.setSpeed(-SPD, SPD);
+        break;
+    case 'e':
+    case 'E':
+        robot.setSpeed(SPD, -SPD);
+        break;
+    case 'r':
+    case 'R':
+        robot.reset();
+        camTheta = 40;
+        camPhi = 20;
+        camDist = 30;
+        break;
+    case 27:
+        exit(0);
     }
 }
 
 static void keyUp(unsigned char k, int, int)
 {
-    switch(k){
-    case 'w': case 'W': case 's': case 'S':
-    case 'a': case 'A': case 'd': case 'D':
-    case 'q': case 'Q': case 'e': case 'E':
-        robot.stop(); break;
+    switch (k)
+    {
+    case 'w':
+    case 'W':
+    case 's':
+    case 'S':
+    case 'a':
+    case 'A':
+    case 'd':
+    case 'D':
+    case 'q':
+    case 'Q':
+    case 'e':
+    case 'E':
+        robot.stop();
+        break;
     }
 }
 
 static void mouse(int b, int s, int x, int y)
 {
-    if(b==GLUT_LEFT_BUTTON){ dragging=(s==GLUT_DOWN); lastX=x; lastY=y; }
-    if(b==3){ camDist-=1.f; if(camDist<3)  camDist=3;  }
-    if(b==4){ camDist+=1.f; if(camDist>120)camDist=120; }
+    if (b == GLUT_LEFT_BUTTON)
+    {
+        dragging = (s == GLUT_DOWN);
+        lastX = x;
+        lastY = y;
+    }
+    if (b == 3)
+    {
+        camDist -= 1.f;
+        if (camDist < 3)
+            camDist = 3;
+    }
+    if (b == 4)
+    {
+        camDist += 1.f;
+        if (camDist > 120)
+            camDist = 120;
+    }
     glutPostRedisplay();
 }
 
 static void motion(int x, int y)
 {
-    if(dragging){
-        camTheta -= (x-lastX)*0.5f;
-        camPhi   += (y-lastY)*0.5f;
-        if(camPhi> 89) camPhi= 89;
-        if(camPhi<-89) camPhi=-89;
-        lastX=x; lastY=y;
+    if (dragging)
+    {
+        camTheta -= (x - lastX) * 0.5f;
+        camPhi += (y - lastY) * 0.5f;
+        if (camPhi > 89)
+            camPhi = 89;
+        if (camPhi < -89)
+            camPhi = -89;
+        lastX = x;
+        lastY = y;
         glutPostRedisplay();
     }
 }
 
-static void reshape(int w, int h){ W=w; H=h?h:1; glViewport(0,0,W,H); }
+static void reshape(int w, int h)
+{
+    W = w;
+    H = h ? h : 1;
+    glViewport(0, 0, W, H);
+}
 
 // ── entry point ──────────────────────────────────────────────
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-    glutInit(&argc,argv);
-        quad = gluNewQuadric();
+     if (!initJoystick())
+    {
+        return 1;
+    }
 
-    glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB|GLUT_DEPTH);
-    glutInitWindowSize(W,H);
+
+    glutInit(&argc, argv);
+    quad = gluNewQuadric();
+
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
+    glutInitWindowSize(W, H);
     glutCreateWindow("Magnetic Robot on Tank – Wheel / Robot / Tank classes");
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
@@ -184,8 +416,9 @@ int main(int argc, char** argv)
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
     glutIdleFunc(idle);
-    gluDeleteQuadric(quad);
 
     glutMainLoop();
+
+    gluDeleteQuadric(quad);
     return 0;
 }

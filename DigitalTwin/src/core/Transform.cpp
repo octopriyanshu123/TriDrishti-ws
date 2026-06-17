@@ -64,7 +64,7 @@ struct Transform
     void set(float x, float y, float z,
              float r, float p, float yw)
     {
-        tx = x;  ty = y;  tz = z;
+        tx = x;  ty = z;  tz = -y;
         roll = r;  pitch = p;  yaw = yw;
     }
 };

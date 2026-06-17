@@ -2,6 +2,8 @@
 //  Base.h
 //  Robot base platform (yellow plate)
 // ============================================================
+#pragma once
+
 #include <GL/glut.h>
 #include <cmath>
 #include "Axis.cpp"
@@ -168,9 +170,9 @@ public:
         drawEdges();
 
         // Draw axis for reference (optional)
-        Axis a1("base_link", 1.8f);
-        a1.setOrientation(180.f, 0.f, 0.f);
-        a1.draw();
+        // Axis a1("base_link", 1.8f);
+        // a1.setOrientation(180.f, 0.f, 0.f);
+        // a1.draw();
 
         glPopMatrix();
         glPopAttrib();

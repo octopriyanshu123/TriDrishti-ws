@@ -29,8 +29,8 @@
               "state": {
                 "file": "Excalidraw Control Flow/UI_FlowChart.md"
               },
-              "icon": "excalidraw-icon",
-              "title": "UI_FlowChart"
+              "icon": "lucide-ghost",
+              "title": "excalidraw"
             }
           },
           {
@@ -53,10 +53,10 @@
             "state": {
               "type": "excalidraw",
               "state": {
-                "file": "DIgitalTwin/Drawing 2026-06-05 13.00.07.excalidraw.md"
+                "file": "Excalidraw Control Flow/UI_FlowChart.md"
               },
               "icon": "excalidraw-icon",
-              "title": "Drawing 2026-06-05 13.00.07.excalidraw"
+              "title": "UI_FlowChart"
             }
           },
           {
@@ -67,8 +67,8 @@
               "state": {
                 "file": "Excalidraw Control Flow/UI_FlowChart.md"
               },
-              "icon": "excalidraw-icon",
-              "title": "UI_FlowChart"
+              "icon": "lucide-ghost",
+              "title": "excalidraw"
             }
           }
         ],
@@ -129,7 +129,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "5e5060e84dc66fcd",
@@ -236,9 +237,10 @@
   },
   "active": "c1007b8fc813df5a",
   "lastOpenFiles": [
+    "Excalidraw Control Flow/UI_FlowChart.md",
+    "Excalidraw Control Flow/Robot_FlowChart.md",
     "DIgitalTwin/Drawing 2026-06-05 13.00.07.excalidraw.md",
     "Pasted Image 20260605160602_194.png",
-    "Excalidraw Control Flow/UI_FlowChart.md",
     "DIgitalTwin/Mobile Robot Kinematics.md",
     "DIgitalTwin/TF.md",
     "todo.md",
@@ -248,7 +250,6 @@
     "Controllers/Controller Manager.md",
     "Controllers/Linear Actuator Controller.md",
     "HAL/Leaser Profiling Sensor.md",
-    "Excalidraw Control Flow/Robot_FlowChart.md",
     "State/State Manager.md",
     "State/Logger.md",
     "Excalidraw/Drawing 2026-06-04 18.38.33.excalidraw.md",
