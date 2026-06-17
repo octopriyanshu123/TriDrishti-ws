@@ -138,9 +138,25 @@ public:
         drawRaster();
     }
 
-    void rasterOn(double dt)
+    void rasterupdate(){
+        raster.update();
+    }
+
+    void rasterHome(double dt)
     {
-        raster.update(dt);
+        if (raster.isAtHome() == false)
+        {
+            raster.home();
+        }
+    }
+
+    void rasterLeft(double dt)
+    {
+        raster.moveLeft();
+    }
+    void rasteRight(double dt)
+    {
+        raster.moveRight();
     }
 
 private:

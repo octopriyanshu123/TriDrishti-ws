@@ -202,6 +202,14 @@ static bool initJoystick()
 static void updatePoseFromJoystick()
 {
     js_event event;
+    auto now = std::chrono::steady_clock::now();
+
+    double dt =
+        std::chrono::duration<double>(
+            now - lastTime)
+            .count();
+
+    lastTime = now;
 
     while (read(js_fd, &event, sizeof(event)) > 0)
     {
@@ -215,17 +223,34 @@ static void updatePoseFromJoystick()
                     static_cast<float>(event.value) / 32767.0f;
             }
         }
+        else if (event.type == JS_EVENT_BUTTON)
+        {
+            if (event.value) // button pressed
+            {
+                // LB
+                if (event.number == 4)
+                {
+              robot.rasterLeft(dt);
+                }
+
+                // RB
+                if (event.number == 5)
+                {
+                robot.rasteRight(dt);
+
+                }
+
+                if (event.number == 1)
+                {
+                robot.rasterHome(dt);
+
+                }
+            }
+        }
     }
 
-    auto now = std::chrono::steady_clock::now();
-
-    double dt =
-        std::chrono::duration<double>(
-            now - lastTime)
-            .count();
-
-    lastTime = now;
-      robot.rasterOn(dt);
+    
+   
 
     double linear_vel = -axis[1];
     double angular_vel = -axis[2];
@@ -252,6 +277,7 @@ static void updatePoseFromJoystick()
 static void idle()
 {
     updatePoseFromJoystick();
+    robot.rasterupdate();
 
     glutPostRedisplay();
 }

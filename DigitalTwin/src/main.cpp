@@ -300,6 +300,15 @@ static bool initJoystick()
 }
 static void updatePoseFromJoystick()
 {
+
+    auto now = std::chrono::steady_clock::now();
+
+    double dt =
+        std::chrono::duration<double>(
+            now - lastTime)
+            .count();
+    lastTime = now;
+
     js_event event;
 
     while (read(js_fd, &event, sizeof(event)) > 0)
@@ -321,41 +330,22 @@ static void updatePoseFromJoystick()
                 // LB
                 if (event.number == 4)
                 {
-                    speedScale -= 0.1f;
-
-                    if (speedScale < 0.1f)
-                        speedScale = 0.1f;
-
-                    std::cout << "\nSpeed: "
-                              << speedScale
-                              << std::endl;
+                    robot.rasterLeft(dt);
                 }
 
                 // RB
                 if (event.number == 5)
                 {
-                    speedScale += 0.1f;
+                    robot.rasteRight(dt);
+                }
 
-                    if (speedScale > 5.0f)
-                        speedScale = 5.0f;
-
-                    std::cout << "\nSpeed: "
-                              << speedScale
-                              << std::endl;
+                if (event.number == 1)
+                {
+                    robot.rasterHome(dt);
                 }
             }
         }
     }
-
-    auto now = std::chrono::steady_clock::now();
-
-    double dt =
-        std::chrono::duration<double>(
-            now - lastTime)
-            .count();
-robot.rasterOn(dt);            
-
-    lastTime = now;
 
     double linear_vel = -axis[1];
     double angular_vel = -axis[2];
@@ -406,7 +396,7 @@ robot.rasterOn(dt);
 static void idle()
 {
     updatePoseFromJoystick();
-
+    robot.rasterupdate();
     glutPostRedisplay();
 }
 
