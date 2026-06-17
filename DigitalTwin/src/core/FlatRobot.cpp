@@ -44,6 +44,7 @@
 #include "Wheel.cpp"
 #include "Base.cpp"
 #include "Transform.cpp"
+#include "Raster.cpp"
 
 class FlatRobot
 {
@@ -57,6 +58,7 @@ public:
     Wheel rightWheel{true};
     Base base;
 
+    Raster raster;
     // ── world pose ───────────────────────────────────────────
     float x = 0.f;   // world X position
     float z = 0.f;   // world Z position
@@ -111,95 +113,94 @@ public:
     //
     void draw() const
     {
-            Axis("Robot", 1.0f).draw();
+        // Axis("Robot", 1.0f).draw();
 
         Transform robotTf;
-         robotTf.set(
-        0.0f, // X
-        0.0f, // Z
-        0.0f, // Z
+        robotTf.set(
+            0.0f, // X
+            0.0f, // Z
+            0.0f, // Z
 
-        0.0f,                                        // roll
-        90.0f, // pitch (Y axis)
-        0.0f                                         // yaw
-    );
+            0.0f,  // roll
+            90.0f, // pitch (Y axis)
+            0.0f   // yaw
+        );
 
-    robotTf.apply();
-      drawRobot() ;
-
-
+        robotTf.apply();
+        drawRobot();
     }
 
-      void drawRobot() const
+    void drawRobot() const
     {
         drawBase();
         drawLeftWheel();
         drawRightWheel();
+        drawRaster();
     }
 
-
-    
+    void rasterOn(double dt)
+    {
+        raster.update(dt);
+    }
 
 private:
-// ── drawBase ─────────────────────────────────────────────
-//  Base sits flat on the ground, centred between the wheels.
-//  Base class has X=outward (thickness direction).
-//  On flat ground X must point up (Y), so roll = -90°.
-//  Translate up by half the plate thickness so bottom = Y=0.
-void drawBase() const
-{
-    Transform baseTF;
-    baseTF.setTranslation(0.43f, 0.16375f, 0.f);
-    baseTF.setRotation(-180.f,0.f,0.f);
+    // ── drawBase ─────────────────────────────────────────────
+    //  Base sits flat on the ground, centred between the wheels.
+    //  Base class has X=outward (thickness direction).
+    //  On flat ground X must point up (Y), so roll = -90°.
+    //  Translate up by half the plate thickness so bottom = Y=0.
+    void drawBase() const
+    {
+        Transform baseTF;
+        baseTF.setTranslation(0.43f, 0.16375f, 0.f);
+        baseTF.setRotation(-180.f, 0.f, 0.f);
 
-    glPushMatrix(); // ── PUSH base
-    baseTF.apply();
-    base.draw();
-    glPopMatrix(); // ── POP base
-}
+        glPushMatrix(); // ── PUSH base
+        baseTF.apply();
+        base.draw();
+        glPopMatrix(); // ── POP base
+    }
 
-// ── drawLeftWheel ────────────────────────────────────────
-//  Left wheel sits at -Z (left side), height = TYRE_R (centre).
-//  Wheel geometry spins around its own Z axis by default.
-//  roll = -90° stands the wheel upright (disk vertical, axle along Z).
-//  pitch = 180° flips the left wheel so its axis faces outward (-Z).
-void drawLeftWheel() const
-{
-    Transform leftWheelTF;
-    leftWheelTF.setTranslation(0.495f, 0.16375f,0.f);
-    leftWheelTF.setRotation(0.f, 90.f, 0.f); // roll -90, pitch 180
+    // ── drawLeftWheel ────────────────────────────────────────
+    //  Left wheel sits at -Z (left side), height = TYRE_R (centre).
+    //  Wheel geometry spins around its own Z axis by default.
+    //  roll = -90° stands the wheel upright (disk vertical, axle along Z).
+    //  pitch = 180° flips the left wheel so its axis faces outward (-Z).
+    void drawLeftWheel() const
+    {
+        Transform leftWheelTF;
+        leftWheelTF.setTranslation(0.495f, 0.16375f, 0.f);
+        leftWheelTF.setRotation(0.f, 90.f, 0.f); // roll -90, pitch 180
 
-    glPushMatrix(); // ── PUSH left wheel
-    leftWheelTF.apply();
-    leftWheel.draw(0);
-    glPopMatrix(); // ── POP left wheel
-}
+        glPushMatrix(); // ── PUSH left wheel
+        leftWheelTF.apply();
+        leftWheel.draw(0);
+        glPopMatrix(); // ── POP left wheel
+    }
 
-// ── drawRightWheel ───────────────────────────────────────
-//  Right wheel sits at +Z (right side), height = TYRE_R.
-//  roll = -90° stands the wheel upright.
-//  No pitch flip needed — right wheel faces outward (+Z) by default.
-void drawRightWheel() const
-{
-    Transform rightWheelTF;
-    rightWheelTF.setTranslation(-0.495f, 0.16375, 0.f);
-    rightWheelTF.setRotation(0.f, 90.f, 0.f); // roll -90 only
+    // ── drawRightWheel ───────────────────────────────────────
+    //  Right wheel sits at +Z (right side), height = TYRE_R.
+    //  roll = -90° stands the wheel upright.
+    //  No pitch flip needed — right wheel faces outward (+Z) by default.
+    void drawRightWheel() const
+    {
+        Transform rightWheelTF;
+        rightWheelTF.setTranslation(-0.495f, 0.16375, 0.f);
+        rightWheelTF.setRotation(0.f, 90.f, 0.f); // roll -90 only
 
-    glPushMatrix(); // ── PUSH right wheel
-    rightWheelTF.apply();
-    rightWheel.draw(1);
-    glPopMatrix(); // ── POP right wheel
-}
+        glPushMatrix(); // ── PUSH right wheel
+        rightWheelTF.apply();
+        rightWheel.draw(1);
+        glPopMatrix(); // ── POP right wheel
+    }
+
+    void drawRaster() const
+    {
+        glPushMatrix();
+        Transform rasterTf;
+        rasterTf.setTranslation(-1.8, 0.2, 1);
+        rasterTf.apply();
+        raster.draw();
+        glPopMatrix();
+    }
 };
-
-
-
-
-
-
-
-
-
-
-
-

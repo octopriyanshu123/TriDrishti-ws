@@ -12,13 +12,14 @@
 #include "core/FlatRobot.cpp"
 #include "core/Pose.cpp"
 
+static int speedScale = 1;
 static int js_fd = -1;
 static float axis[8] = {0};
 static std::chrono::steady_clock::time_point lastTime;
 GLUquadric *quad = NULL;
 
 static double theta = 1.0;
-static double height = 2.0;
+static double height = 0.60;
 
 struct CylindercalPose
 {
@@ -196,7 +197,7 @@ void drawSpot()
         spotPose.yaw);
     tf_spot_perprndicular_to_tank.apply();
 
-    Axis("Spot", 1.0f).draw();
+    // Axis("Spot", 1.0f).draw();
 
     glEnable(GL_LIGHTING);
 
@@ -204,25 +205,54 @@ void drawSpot()
 }
 
 // drawRobot
+// static void drawRobot()
+// {
+//     // glPushMatrix();
+
+//     Transform robotTf;
+
+//     robotTf.set(
+//         static_cast<float>(robotPose.x), // X
+//         static_cast<float>(robotPose.y), // Z
+//         0.0f,                            // Z
+
+//         0.0f,                                             // roll
+//         static_cast<float>(robotPose.yaw * 180.0 / M_PI), // pitch (Y axis)
+//         0.0f                                              // yaw
+//     );
+
+//     robotTf.apply();
+
+//     robot.draw();
+// }
+
+// Alling the spot to robot
 static void drawRobot()
 {
-    // glPushMatrix();
+    glPushMatrix();
 
-    Transform robotTf;
+    glTranslatef(
+        spotPose.x,
+        spotPose.y,
+        spotPose.z);
 
-    robotTf.set(
-        static_cast<float>(robotPose.x), // X
-        static_cast<float>(robotPose.y), // Z
-        0.0f,                            // Z
+    Transform tf;
+    tf.set(0, 0, 0, 0, 90, -90);
+    tf.apply();
 
-        0.0f,                                             // roll
-        static_cast<float>(robotPose.yaw * 180.0 / M_PI), // pitch (Y axis)
-        0.0f                                              // yaw
-    );
-
-    robotTf.apply();
+    Transform tf_spot_perprndicular_to_tank;
+    tf_spot_perprndicular_to_tank.set(
+        0,
+        0,
+        0,
+        spotPose.roll,
+        spotPose.pitch * 180.0 / M_PI,
+        spotPose.yaw);
+    tf_spot_perprndicular_to_tank.apply();
 
     robot.draw();
+
+    glPopMatrix();
 }
 
 // ── GLUT callbacks ───────────────────────────────────────────
@@ -284,6 +314,37 @@ static void updatePoseFromJoystick()
                     static_cast<float>(event.value) / 32767.0f;
             }
         }
+        else if (event.type == JS_EVENT_BUTTON)
+        {
+            if (event.value) // button pressed
+            {
+                // LB
+                if (event.number == 4)
+                {
+                    speedScale -= 0.1f;
+
+                    if (speedScale < 0.1f)
+                        speedScale = 0.1f;
+
+                    std::cout << "\nSpeed: "
+                              << speedScale
+                              << std::endl;
+                }
+
+                // RB
+                if (event.number == 5)
+                {
+                    speedScale += 0.1f;
+
+                    if (speedScale > 5.0f)
+                        speedScale = 5.0f;
+
+                    std::cout << "\nSpeed: "
+                              << speedScale
+                              << std::endl;
+                }
+            }
+        }
     }
 
     auto now = std::chrono::steady_clock::now();
@@ -292,6 +353,7 @@ static void updatePoseFromJoystick()
         std::chrono::duration<double>(
             now - lastTime)
             .count();
+robot.rasterOn(dt);            
 
     lastTime = now;
 
@@ -304,9 +366,7 @@ static void updatePoseFromJoystick()
 
     robotPose.yaw += angular_vel * dt;
 
-    
-
-    spotPose.pitch += angular_vel*dt;
+    spotPose.pitch += angular_vel * dt;
 
     // Forward motion projected onto cylinder coordinates
     double ds =
@@ -326,11 +386,11 @@ static void updatePoseFromJoystick()
     spotPose.height += dh;
 
     // Limits
-    if (spotPose.height < 0.0)
-        spotPose.height = 0.0;
+    if (spotPose.height < 0.60)
+        spotPose.height = 0.60;
 
-    if (spotPose.height > Tank::CYL_H)
-        spotPose.height = Tank::CYL_H;
+    if (spotPose.height > Tank::CYL_H - 0.6)
+        spotPose.height = Tank::CYL_H - 0.6;
 
     // Recompute Cartesian position
     updateCylinderPose(
@@ -339,7 +399,7 @@ static void updatePoseFromJoystick()
 
     std::cout
         << "\rTheta: " << theta * 57.2958
-        << "spotPose.roll" << spotPose.pitch
+        << "spotPose.roll" << spotPose.height
         << std::flush;
 }
 

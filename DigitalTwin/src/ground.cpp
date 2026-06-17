@@ -9,6 +9,7 @@
 #include <chrono>
 #include <iostream>
 
+
 int count = 0;
 struct Pose
 {
@@ -35,6 +36,7 @@ static FlatRobot robot;
 static float camTheta = 40.f, camPhi = 28.f, camDist = 8.f;
 static int lastX = 0, lastY = 0;
 static bool dragging = false;
+
 
 // ── world axes ───────────────────────────────────────────────
 static void drawArrow(float len)
@@ -121,6 +123,30 @@ static void drawHUD()
     glMatrixMode(GL_MODELVIEW);
 }
 
+static void drawRobot(){
+    glPushMatrix();
+
+    Transform robotTf;
+
+    robotTf.set(
+        static_cast<float>(pose.x), // X
+        static_cast<float>(pose.y), // Z
+        0.0f, // Z
+
+        0.0f,                                        // roll
+        static_cast<float>(pose.yaw * 180.0 / M_PI), // pitch (Y axis)
+        0.0f                                         // yaw
+    );
+
+    robotTf.apply();
+
+    
+
+    robot.draw();
+
+    glPopMatrix();
+}
+
 // ── display ──────────────────────────────────────────────────
 static void display()
 {
@@ -152,25 +178,8 @@ static void display()
  
 
         
-    glPushMatrix();
-
-    Transform robotTf;
-
-    robotTf.set(
-        static_cast<float>(pose.x), // X
-        static_cast<float>(pose.y), // Z
-        0.0f, // Z
-
-        0.0f,                                        // roll
-        static_cast<float>(pose.yaw * 180.0 / M_PI), // pitch (Y axis)
-        0.0f                                         // yaw
-    );
-
-    robotTf.apply();
-
-    robot.draw();
-
-    glPopMatrix();
+    drawRobot();
+    // raster.draw();
 
     drawHUD();
     glutSwapBuffers();
@@ -216,6 +225,7 @@ static void updatePoseFromJoystick()
             .count();
 
     lastTime = now;
+      robot.rasterOn(dt);
 
     double linear_vel = -axis[1];
     double angular_vel = -axis[2];
