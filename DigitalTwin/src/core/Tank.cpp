@@ -20,8 +20,8 @@ class Tank
 {
 public:
     // ── geometry constants ───────────────────────────────────
-    static constexpr float CYL_R  = 2.50f;
-    static constexpr float CYL_H  = 5.00f;
+    static constexpr float CYL_R  = 10.0f;
+    static constexpr float CYL_H  = 10.00f;
     static constexpr int   SEG    = 72;
     static constexpr int   LAT    = 8;    // latitude  grid rings
     static constexpr int   LON    = 16;   // longitude grid lines

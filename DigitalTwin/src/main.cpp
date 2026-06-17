@@ -10,19 +10,21 @@
 #include "core/Tank.cpp"
 #include "core/Robot.cpp"
 #include "core/FlatRobot.cpp"
+#include "core/Pose.cpp"
+
 
 static int js_fd = -1;
 static float axis[8] = {0};
 static std::chrono::steady_clock::time_point lastTime;
 GLUquadric *quad = NULL;
-struct Pose
-{
-    double x = 0.0;
-    double y = 0.0;
-    double yaw = 0.0;
-};
 
-static Pose pose;
+static double theta = 1.0;
+static double height = 2.0;
+
+static Pose robotPose;
+static Pose spotPose;
+
+
 
 // ── window ───────────────────────────────────────────────────
 static int W = 1280, H = 800;
@@ -72,30 +74,6 @@ static void drawWorldAxes()
     glPopAttrib();
 }
 
-// ── HUD ──────────────────────────────────────────────────────
-// static void drawHUD()
-// {
-//     char buf[256];
-    
-
-//     glMatrixMode(GL_PROJECTION);
-//     glPushMatrix();
-//     glLoadIdentity();
-//     gluOrtho2D(0, W, 0, H);
-//     glMatrixMode(GL_MODELVIEW);
-//     glPushMatrix();
-//     glLoadIdentity();
-//     glDisable(GL_LIGHTING);
-//     glColor3f(0.75f, 0.95f, 0.65f);
-//     glRasterPos2f(10, 10);
-//     for (char *p = buf; *p; p++)
-//         glutBitmapCharacter(GLUT_BITMAP_9_BY_15, *p);
-//     glEnable(GL_LIGHTING);
-//     glPopMatrix();
-//     glMatrixMode(GL_PROJECTION);
-//     glPopMatrix();
-//     glMatrixMode(GL_MODELVIEW);
-// }
 static void drawGrid()
 {
     glPushAttrib(GL_LIGHTING_BIT);
@@ -141,6 +119,22 @@ static void setupLighting()
     glEnable(GL_COLOR_MATERIAL);
 }
 
+void drawLineToSpot(float x, float y, float z)
+{
+    glPushAttrib(GL_LIGHTING_BIT);
+
+    glDisable(GL_LIGHTING);
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+    glBegin(GL_LINES);
+        glVertex3f(0.0f, height, 0.0f);
+        glVertex3f(x, y, z);
+    glEnd();
+
+    glPopAttrib();
+}
+
+
 // DrawSpot
 void drawSpot()
 {
@@ -150,31 +144,46 @@ void drawSpot()
 
     glPushMatrix();
 
-    glTranslatef(x,y,z);
+        drawLineToSpot(x, y, z);
+
+    glTranslatef(x, y, z);
 
     glDisable(GL_LIGHTING);
-    glColor3f(1,0,0);
+    glColor3f(1, 0, 0);
 
-    glutSolidSphere(0.05,16,16);
+    glutSolidSphere(0.05, 16, 16);
+
+    Transform tf;
+    tf.set(0, 0, 0, 0, 90, -90);
+    tf.apply();
+
+
+ Transform tf_spot_perprndicular_to_tank;
+    tf_spot_perprndicular_to_tank.set(0, 0, 0, 0, 0 ,(theta * 180.0f / M_PI));
+    tf_spot_perprndicular_to_tank.apply();
+
+    Axis("Spot", 1.0f).draw();
 
     glEnable(GL_LIGHTING);
 
     glPopMatrix();
 }
 
-// drawRobot 
-static void drawRobot(){
+
+// drawRobot
+static void drawRobot()
+{
     // glPushMatrix();
 
     Transform robotTf;
 
     robotTf.set(
-        static_cast<float>(pose.x), // X
-        static_cast<float>(pose.y), // Z
-        0.0f, // Z
+        static_cast<float>(robotPose.x), // X
+        static_cast<float>(robotPose.y), // Z
+        0.0f,                       // Z
 
         0.0f,                                        // roll
-        static_cast<float>(pose.yaw * 180.0 / M_PI), // pitch (Y axis)
+        static_cast<float>(robotPose.yaw * 180.0 / M_PI), // pitch (Y axis)
         0.0f                                         // yaw
     );
 
@@ -208,6 +217,7 @@ static void display()
     Axis("world", 1.0f).draw();
 
     drawTank();
+    drawSpot();
     drawRobot();
 
     glutSwapBuffers();
@@ -255,28 +265,36 @@ static void updatePoseFromJoystick()
     double linear_vel = -axis[1];
     double angular_vel = -axis[2];
 
-    pose.x += linear_vel *
-              std::cos(pose.yaw) * dt;
+    robotPose.x += linear_vel * std::cos(robotPose.yaw) * dt;
+    theta -= (linear_vel / Tank::CYL_R) * dt;
 
-    pose.y += linear_vel *
-              std::sin(pose.yaw) * dt;
+    robotPose.y += linear_vel * std::sin(robotPose.yaw) * dt;
+    height += angular_vel * dt;
 
-    pose.yaw += angular_vel * dt;
+    robotPose.yaw += angular_vel * dt;
 
-    std::cout
-        << "\rX: " << pose.x
-        << "  Y: " << pose.y
-        << "  Yaw: " << pose.yaw
-        << "  V: " << linear_vel
-        << "  W: " << angular_vel
-        << "      "
+    if (height < 0.0)
+        height = 0.0;
+
+    if (height > Tank::CYL_H)
+        height = Tank::CYL_H;
+
+        std::cout
+        << "\rTheta: " << theta*57.2958
         << std::flush;
+    // std::cout
+    //     << "\rX: " << robotPose.x
+    //     << "  Y: " << robotPose.y
+    //     << "  Yaw: " << robotPose.yaw
+    //     << "  V: " << linear_vel
+    //     << "  W: " << angular_vel
+    //     << "      "
+    //     << std::flush;
 }
-
 
 static void idle()
 {
-        updatePoseFromJoystick();
+    updatePoseFromJoystick();
 
     glutPostRedisplay();
 }
@@ -392,11 +410,10 @@ static void reshape(int w, int h)
 // ── entry point ──────────────────────────────────────────────
 int main(int argc, char **argv)
 {
-     if (!initJoystick())
+    if (!initJoystick())
     {
         return 1;
     }
-
 
     glutInit(&argc, argv);
     quad = gluNewQuadric();
