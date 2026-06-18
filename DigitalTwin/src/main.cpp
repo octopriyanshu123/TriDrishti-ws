@@ -343,6 +343,12 @@ static void updatePoseFromJoystick()
                 {
                     robot.rasterHome(dt);
                 }
+
+                if (event.number == 1)
+                {
+                    robot.rasteToggleAuto(dt);
+                }
+                
             }
         }
     }

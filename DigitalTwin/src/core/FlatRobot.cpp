@@ -138,7 +138,8 @@ public:
         drawRaster();
     }
 
-    void rasterupdate(){
+    void rasterupdate()
+    {
         raster.update();
     }
 
@@ -157,6 +158,10 @@ public:
     void rasteRight(double dt)
     {
         raster.moveRight();
+    }
+    void rasteToggleAuto(double dt)
+    {
+        raster.toggleAuto();
     }
 
 private:

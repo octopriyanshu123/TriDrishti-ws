@@ -245,6 +245,7 @@ static void updatePoseFromJoystick()
                 robot.rasterHome(dt);
 
                 }
+                
             }
         }
     }
