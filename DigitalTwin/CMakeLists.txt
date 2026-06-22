@@ -29,23 +29,23 @@ set_target_properties(magnetic_robot PROPERTIES
 
 
 
-add_executable(ground_robot src/ground.cpp)
+add_executable(oiltank src/oiltank.cpp)
 
-target_include_directories(ground_robot PRIVATE
+target_include_directories(oiltank PRIVATE
     ${OPENGL_INCLUDE_DIRS}
     ${GLUT_INCLUDE_DIRS}
     ${CMAKE_CURRENT_SOURCE_DIR}   
 )
 
-target_link_libraries(ground_robot PRIVATE
+target_link_libraries(oiltank PRIVATE
     ${OPENGL_LIBRARIES}
     ${GLUT_LIBRARIES}
     m
 )
 
-target_compile_options(ground_robot PRIVATE -Wall -O2)
+target_compile_options(oiltank PRIVATE -Wall -O2)
 
-set_target_properties(ground_robot PROPERTIES
+set_target_properties(oiltank PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
 
@@ -118,23 +118,4 @@ set_target_properties(camera PROPERTIES
 
 
 
-add_executable(oilTank src/core/oilTank.cpp)
-
-target_include_directories(oilTank PRIVATE
-    ${OPENGL_INCLUDE_DIRS}
-    ${GLUT_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_SOURCE_DIR}   
-)
-
-target_link_libraries(oilTank PRIVATE
-    ${OPENGL_LIBRARIES}
-    ${GLUT_LIBRARIES}
-    m
-)
-
-target_compile_options(oilTank PRIVATE -Wall -O2)
-
-set_target_properties(oilTank PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-)
 
