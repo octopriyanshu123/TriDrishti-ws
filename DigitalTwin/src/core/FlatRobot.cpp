@@ -173,7 +173,7 @@ private:
     void drawBase() const
     {
         Transform baseTF;
-        baseTF.setTranslation(0.43f, 0.16375f, 0.f);
+        baseTF.setTranslation(0.43f, 0.3875f, 0.f);
         baseTF.setRotation(-180.f, 0.f, 0.f);
 
         glPushMatrix(); // ── PUSH base
@@ -190,7 +190,7 @@ private:
     void drawLeftWheel() const
     {
         Transform leftWheelTF;
-        leftWheelTF.setTranslation(0.495f, 0.16375f, 0.f);
+        leftWheelTF.setTranslation(0.495f, 0.3875f, 0.f);
         leftWheelTF.setRotation(0.f, 90.f, 0.f); // roll -90, pitch 180
 
         glPushMatrix(); // ── PUSH left wheel
@@ -206,7 +206,7 @@ private:
     void drawRightWheel() const
     {
         Transform rightWheelTF;
-        rightWheelTF.setTranslation(-0.495f, 0.16375, 0.f);
+        rightWheelTF.setTranslation(-0.495f, 0.3875, 0.f);
         rightWheelTF.setRotation(0.f, 90.f, 0.f); // roll -90 only
 
         glPushMatrix(); // ── PUSH right wheel

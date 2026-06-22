@@ -272,7 +272,7 @@ static void display()
     gluLookAt(camDist * cosf(rP) * sinf(rT),
               camDist * sinf(rP),
               camDist * cosf(rP) * cosf(rT),
-              0, 0, 0, 0, 1, 0);
+              0, tank.getHeight() / 2.0f, 0, 0, 1, 0);
 
     glEnable(GL_DEPTH_TEST);
     setupLighting();
@@ -376,7 +376,7 @@ static void updatePoseFromJoystick()
         dt;
 
     // Move around circumference
-    spotPose.theta -= ds / Tank::CYL_R;
+    spotPose.theta -= ds / tank.getRadius();
 
     // Move vertically
     spotPose.height += dh;
@@ -385,13 +385,13 @@ static void updatePoseFromJoystick()
     if (spotPose.height < 0.60)
         spotPose.height = 0.60;
 
-    if (spotPose.height > Tank::CYL_H - 0.6)
-        spotPose.height = Tank::CYL_H - 0.6;
+    if (spotPose.height > tank.getHeight()- 0.6)
+        spotPose.height = tank.getHeight() - 0.6;
 
     // Recompute Cartesian position
     updateCylinderPose(
         spotPose,
-        Tank::CYL_R);
+        tank.getRadius());
 
     std::cout
         << "\rTheta: " << theta * 57.2958

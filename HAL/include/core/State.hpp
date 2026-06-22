@@ -1,6 +1,6 @@
 #pragma once
 
-namespace hal
+namespace STMHal
 {
 
 enum class State
@@ -10,6 +10,7 @@ enum class State
     INACTIVE,
     ACTIVE,
     ERROR,
+    RECOVERING,
     SHUTDOWN
 };
 

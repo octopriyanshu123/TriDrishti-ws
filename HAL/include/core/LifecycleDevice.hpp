@@ -1,32 +1,10 @@
 #pragma once
 
-#include <cstdint>
+#include "Result.hpp"
+#include "State.hpp"
 
-// ---------------------------------------------------------------------------
-// Result — richer than bool, leaner than exceptions
-// ---------------------------------------------------------------------------
-enum class Result
+namespace STMHal
 {
-    SUCCESS,
-    TIMEOUT,
-    CONNECTION_FAILED,
-    INVALID_STATE,
-    HARDWARE_FAULT
-};
-
-// ---------------------------------------------------------------------------
-// State — mirrors real hardware lifecycle
-// ---------------------------------------------------------------------------
-enum class State
-{
-    UNINITIALIZED,   // Object created, nothing opened
-    INITIALIZING,    // Opening ports, configuring hardware
-    INACTIVE,        // Connected but outputs disabled
-    ACTIVE,          // Fully operational
-    ERROR,           // Hardware / communication failure
-    RECOVERING,      // Attempting reconnection or reset
-    SHUTDOWN         // Fully closed, resources released
-};
 
 // ---------------------------------------------------------------------------
 // LifecycleDevice
@@ -93,3 +71,5 @@ private:
 
     void transitionTo(State s) { current_state_ = s; }
 };
+
+}

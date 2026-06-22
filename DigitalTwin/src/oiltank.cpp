@@ -11,6 +11,7 @@
 #include "core/Robot.cpp"
 #include "core/FlatRobot.cpp"
 #include "core/Pose.cpp"
+#include "core/panel.cpp"
 
 static int speedScale = 1;
 static int js_fd = -1;
@@ -107,7 +108,7 @@ static void drawGrid()
     glPushAttrib(GL_LIGHTING_BIT);
     glDisable(GL_LIGHTING);
     glBegin(GL_LINES);
-    for (int i = -12; i <= 12; i++)
+    for (int i = -24; i <= 24; i++)
     {
         float f = (float)i;
         bool maj = (i % 4 == 0);
@@ -115,10 +116,10 @@ static void drawGrid()
             glColor4f(.50f, .50f, .52f, .8f);
         else
             glColor4f(.28f, .28f, .30f, .4f);
-        glVertex3f(f, 0, -12);
-        glVertex3f(f, 0, 12);
-        glVertex3f(-12, 0, f);
-        glVertex3f(12, 0, f);
+        glVertex3f(f, 0, -24);
+        glVertex3f(f, 0, 24);
+        glVertex3f(-24, 0, f);
+        glVertex3f(24, 0, f);
     }
     glEnd();
     glPopAttrib();
@@ -147,114 +148,6 @@ static void setupLighting()
     glEnable(GL_COLOR_MATERIAL);
 }
 
-void drawLineToSpot(float x, float y, float z)
-{
-    glPushAttrib(GL_LIGHTING_BIT);
-
-    glDisable(GL_LIGHTING);
-    glColor3f(1.0f, 1.0f, 1.0f);
-
-    glBegin(GL_LINES);
-    glVertex3f(0.0f, height, 0.0f);
-    glVertex3f(x, y, z);
-    glEnd();
-
-    glPopAttrib();
-}
-
-// DrawSpot
-void drawSpot()
-{
-    float x = spotPose.x;
-    float y = spotPose.y;
-    float z = spotPose.z;
-    glPushMatrix();
-
-    drawLineToSpot(x, y, z);
-
-    glTranslatef(x, y, z);
-
-    glDisable(GL_LIGHTING);
-    glColor3f(1, 0, 0);
-
-    glutSolidSphere(0.05, 16, 16);
-
-    Transform tf;
-    tf.set(0, 0, 0, 0, 90, -90);
-    tf.apply();
-
-    spotPose.yaw = spotPose.theta * 180.0 / M_PI;
-    // spotPose.pitch = 0;
-    // spotPose.roll = 0;
-
-    Transform tf_spot_perprndicular_to_tank;
-    tf_spot_perprndicular_to_tank.set(
-        0,
-        0,
-        0,
-        spotPose.roll,
-        spotPose.pitch * 180.0 / M_PI,
-        spotPose.yaw);
-    tf_spot_perprndicular_to_tank.apply();
-
-    // Axis("Spot", 1.0f).draw();
-
-    glEnable(GL_LIGHTING);
-
-    glPopMatrix();
-}
-
-// drawRobot
-// static void drawRobot()
-// {
-//     // glPushMatrix();
-
-//     Transform robotTf;
-
-//     robotTf.set(
-//         static_cast<float>(robotPose.x), // X
-//         static_cast<float>(robotPose.y), // Z
-//         0.0f,                            // Z
-
-//         0.0f,                                             // roll
-//         static_cast<float>(robotPose.yaw * 180.0 / M_PI), // pitch (Y axis)
-//         0.0f                                              // yaw
-//     );
-
-//     robotTf.apply();
-
-//     robot.draw();
-// }
-
-// Alling the spot to robot
-static void drawRobot()
-{
-    glPushMatrix();
-
-    glTranslatef(
-        spotPose.x,
-        spotPose.y,
-        spotPose.z);
-
-    Transform tf;
-    tf.set(0, 0, 0, 0, 90, -90);
-    tf.apply();
-
-    Transform tf_spot_perprndicular_to_tank;
-    tf_spot_perprndicular_to_tank.set(
-        0,
-        0,
-        0,
-        spotPose.roll,
-        spotPose.pitch * 180.0 / M_PI,
-        spotPose.yaw);
-    tf_spot_perprndicular_to_tank.apply();
-
-    robot.draw();
-
-    glPopMatrix();
-}
-
 // ── GLUT callbacks ───────────────────────────────────────────
 static void display()
 {
@@ -272,16 +165,14 @@ static void display()
     gluLookAt(camDist * cosf(rP) * sinf(rT),
               camDist * sinf(rP),
               camDist * cosf(rP) * cosf(rT),
-              0, 0, 0, 0, 1, 0);
+              0, tank.getHeight() / 2, 0, 0, 1, 0);
 
     glEnable(GL_DEPTH_TEST);
     setupLighting();
     drawGrid();
     Axis("world", 1.0f).draw();
-
     drawTank();
-    drawSpot();
-
+    panel.draw();
     glutSwapBuffers();
 }
 static bool initJoystick()
@@ -347,7 +238,6 @@ static void updatePoseFromJoystick()
                 {
                     robot.rasteToggleAuto(dt);
                 }
-                
             }
         }
     }
@@ -375,7 +265,7 @@ static void updatePoseFromJoystick()
         dt;
 
     // Move around circumference
-    spotPose.theta -= ds / Tank::CYL_R;
+    spotPose.theta -= ds / tank.getRadius();
 
     // Move vertically
     spotPose.height += dh;
@@ -384,13 +274,13 @@ static void updatePoseFromJoystick()
     if (spotPose.height < 0.60)
         spotPose.height = 0.60;
 
-    if (spotPose.height > Tank::CYL_H - 0.6)
-        spotPose.height = Tank::CYL_H - 0.6;
+    if (spotPose.height > tank.getHeight() - 0.6)
+        spotPose.height = tank.getHeight() - 0.6;
 
     // Recompute Cartesian position
     updateCylinderPose(
         spotPose,
-        Tank::CYL_R);
+        tank.getRadius());
 
     std::cout
         << "\rTheta: " << theta * 57.2958
@@ -402,11 +292,30 @@ static void idle()
 {
     updatePoseFromJoystick();
     robot.rasterupdate();
+
+    if (panel.applyPressed)
+    {
+        panel.applyPressed = false;
+    }
     glutPostRedisplay();
+}
+
+static void ApplyButton()
+{
+    float r = std::stof(panel.radiusText.c_str());
+
+    float h = std::stof(panel.heightText.c_str());
+    std::cout << "Hi-> \n"
+              << r << h<<std::endl;
+
+    tank.setRadius(r);
+    tank.setHeight(h);
 }
 
 static void keyboard(unsigned char k, int, int)
 {
+    panel.keyboard(k);
+
     const float SPD = 1.8f;
     switch (k)
     {
@@ -469,6 +378,10 @@ static void keyUp(unsigned char k, int, int)
 
 static void mouse(int b, int s, int x, int y)
 {
+    if (panel.mouse(b, s, x, y))
+    {
+        ApplyButton();
+    }
     if (b == GLUT_LEFT_BUTTON)
     {
         dragging = (s == GLUT_DOWN);

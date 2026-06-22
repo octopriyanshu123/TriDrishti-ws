@@ -116,6 +116,54 @@ set_target_properties(camera PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
 )
 
+add_executable(robot src/robot.cpp)
+
+target_include_directories(robot PRIVATE
+    ${OPENGL_INCLUDE_DIRS}
+    ${GLUT_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}   
+)
+
+target_link_libraries(robot PRIVATE
+    ${OPENGL_LIBRARIES}
+    ${GLUT_LIBRARIES}
+    m
+)
+
+target_compile_options(robot PRIVATE -Wall -O2)
+
+set_target_properties(robot PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+
+
+
+add_executable(ui src/ui.cpp)
+
+target_include_directories(ui PRIVATE
+    ${OPENGL_INCLUDE_DIRS}
+    ${GLUT_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_SOURCE_DIR}   
+)
+
+target_link_libraries(ui PRIVATE
+    ${OPENGL_LIBRARIES}
+    ${GLUT_LIBRARIES}
+    m
+)
+
+target_compile_options(ui PRIVATE -Wall -O2)
+
+set_target_properties(ui PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+
+
+
+
+
 
 
 
