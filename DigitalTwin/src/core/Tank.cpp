@@ -66,27 +66,42 @@ public:
             CourceShellPlate courceShellPlate;
 
             // Standard plate
-            ShellPlate StandardPlate;
-            StandardPlate.hight = 2.5f; // 2500
-            StandardPlate.width = 10.f; // 10000
-            StandardPlate.thickness = StandardPlateThickness[i] / 1000;
-            StandardPlate.name = "S" + std::to_string(i + 1);
+            // ShellPlate StandardPlate;
+            // StandardPlate.hight = 2.5f; // 2500
+            // StandardPlate.width = 10.f; // 10000
+            // StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+            // StandardPlate.name = "S" + std::to_string(i + 1);
+            // courceShellPlate.ShellPlates.push_back(StandardPlate);
 
-            for (int j = 0; j < StandardPlateCount[i]; j++)
-            {
-                courceShellPlate.ShellPlates.push_back(StandardPlate);
-            }
+            // for (int j = 0; j < StandardPlateCount[i]; j++)
+            // {
+            //     courceShellPlate.ShellPlates.push_back(StandardPlate);
+            // }
 
             // Special Plate Cource 1
 
             if (i == 0)
             {
+                ShellPlate StandardPlate;
                 ShellPlate Plate;
-                Plate.hight = 2.5f;                                 // 2500
-                Plate.width = 3.75f;                                // 10000
-                Plate.thickness = StandardPlateThickness[i] / 1000; // 20
-                Plate.name = "S" + std::to_string(i + 1) + "A";
-                courceShellPlate.ShellPlates.push_back(Plate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
 
                 Plate.hight = 2.5f;                                 // 2500Plate.hight = 2.5f;                                 // 2500
                 Plate.width = 6.25f;                                // 10000
@@ -94,14 +109,65 @@ public:
                 Plate.name = "S" + std::to_string(i + 1) + "B";
                 courceShellPlate.ShellPlates.push_back(Plate);
 
-                for (int j = 0; j < 2; j++)
-                {
-                    Plate.hight = 2.5f;                                 // 2500
-                    Plate.width = 2.579;                                // 10000
-                    Plate.thickness = StandardPlateThickness[i] / 1000; // 20
-                    Plate.name = "S" + std::to_string(i + 1) + "M";
-                    courceShellPlate.ShellPlates.push_back(Plate);
-                }
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                Plate.hight = 2.5f;                                 // 2500
+                Plate.width = 2.579;                                // 10000
+                Plate.thickness = StandardPlateThickness[i] / 1000; // 20
+                Plate.name = "S" + std::to_string(i + 1) + "M";
+                courceShellPlate.ShellPlates.push_back(Plate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                Plate.hight = 2.5f;                                 // 2500
+                Plate.width = 3.75f;                                // 10000
+                Plate.thickness = StandardPlateThickness[i] / 1000; // 20
+                Plate.name = "S" + std::to_string(i + 1) + "A";
+                courceShellPlate.ShellPlates.push_back(Plate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
             }
 
             // Special Plate Cource 2
@@ -109,15 +175,85 @@ public:
             if (i == 1)
             {
                 ShellPlate Plate;
+                ShellPlate StandardPlate;
 
-                for (int j = 0; j < 2; j++)
-                {
-                    Plate.hight = 2.5f; // 2500
-                    Plate.width = 2.585;
-                    Plate.thickness = StandardPlateThickness[i] / 1000;
-                    Plate.name = "S" + std::to_string(i + 1) + "M";
-                    courceShellPlate.ShellPlates.push_back(Plate);
-                }
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                Plate.hight = 2.5f; // 2500
+                Plate.width = 2.585;
+                Plate.thickness = StandardPlateThickness[i] / 1000;
+                Plate.name = "S" + std::to_string(i + 1) + "M";
+                courceShellPlate.ShellPlates.push_back(Plate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+                courceShellPlate.ShellPlates.push_back(StandardPlate);
             }
 
             // Special Plate Cource 3
@@ -125,14 +261,27 @@ public:
             if (i == 2)
             {
                 ShellPlate Plate;
+                ShellPlate StandardPlate;
 
-                for (int j = 0; j < 2; j++)
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+
+                for (int j = 0; j < 8; j++)
                 {
-                    Plate.hight = 2.5f; // 2500
-                    Plate.width = 2.566;
-                    Plate.thickness = StandardPlateThickness[i] / 1000;
-                    Plate.name = "S" + std::to_string(i + 1) + "M";
-                    courceShellPlate.ShellPlates.push_back(Plate);
+                    courceShellPlate.ShellPlates.push_back(StandardPlate);
+                }
+
+                Plate.hight = 2.5f; // 2500
+                Plate.width = 2.566;
+                Plate.thickness = StandardPlateThickness[i] / 1000;
+                Plate.name = "S" + std::to_string(i + 1) + "M";
+                courceShellPlate.ShellPlates.push_back(Plate);
+
+                for (int j = 0; j < 4; j++)
+                {
+                    courceShellPlate.ShellPlates.push_back(StandardPlate);
                 }
             }
 
@@ -141,14 +290,27 @@ public:
             if (i == 3)
             {
                 ShellPlate Plate;
+                ShellPlate StandardPlate;
 
-                for (int j = 0; j < 2; j++)
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+
+                // for (int j = 0; j < 8; j++)
+                // {
+                //     courceShellPlate.ShellPlates.push_back(StandardPlate);
+                // }
+
+                Plate.hight = 2.5f; // 2500
+                Plate.width = 2.560;
+                Plate.thickness = StandardPlateThickness[i] / 1000;
+                Plate.name = "S" + std::to_string(i + 1) + "M";
+                courceShellPlate.ShellPlates.push_back(Plate);
+
+                for (int j = 0; j < 12; j++)
                 {
-                    Plate.hight = 2.5f; // 2500
-                    Plate.width = 2.560;
-                    Plate.thickness = StandardPlateThickness[i] / 1000;
-                    Plate.name = "S" + std::to_string(i + 1) + "M";
-                    courceShellPlate.ShellPlates.push_back(Plate);
+                    courceShellPlate.ShellPlates.push_back(StandardPlate);
                 }
             }
 
@@ -158,13 +320,27 @@ public:
             {
                 ShellPlate Plate;
 
-                for (int j = 0; j < 2; j++)
+                ShellPlate StandardPlate;
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+
+                for (int j = 0; j < 5; j++)
                 {
-                    Plate.hight = 2.5f; // 2500
-                    Plate.width = 2.554;
-                    Plate.thickness = StandardPlateThickness[i] / 1000;
-                    Plate.name = "S" + std::to_string(i + 1) + "M";
-                    courceShellPlate.ShellPlates.push_back(Plate);
+                    courceShellPlate.ShellPlates.push_back(StandardPlate);
+                }
+
+                Plate.hight = 2.5f; // 2500
+                Plate.width = 2.554;
+                Plate.thickness = StandardPlateThickness[i] / 1000;
+                Plate.name = "S" + std::to_string(i + 1) + "M";
+                courceShellPlate.ShellPlates.push_back(Plate);
+
+                for (int j = 0; j < 7; j++)
+                {
+                    courceShellPlate.ShellPlates.push_back(StandardPlate);
                 }
             }
 
@@ -172,16 +348,28 @@ public:
 
             if (i == 5)
             {
-
                 ShellPlate Plate;
 
-                for (int j = 0; j < 1; j++)
+                ShellPlate StandardPlate;
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+
+                for (int j = 0; j < 6; j++)
                 {
-                    Plate.hight = 2.5f; // 2500
-                    Plate.width = 2.547;
-                    Plate.thickness = StandardPlateThickness[i] / 1000;
-                    Plate.name = "S" + std::to_string(i + 1) + "M";
-                    courceShellPlate.ShellPlates.push_back(Plate);
+                    courceShellPlate.ShellPlates.push_back(StandardPlate);
+                }
+                Plate.hight = 2.5f; // 2500
+                Plate.width = 2.547;
+                Plate.thickness = StandardPlateThickness[i] / 1000;
+                Plate.name = "S" + std::to_string(i + 1) + "M";
+                courceShellPlate.ShellPlates.push_back(Plate);
+
+                for (int j = 0; j < 6; j++)
+                {
+                    courceShellPlate.ShellPlates.push_back(StandardPlate);
                 }
             }
 
@@ -192,13 +380,25 @@ public:
 
                 ShellPlate Plate;
 
-                for (int j = 0; j < 1; j++)
+                ShellPlate StandardPlate;
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+
+                for (int j = 0; j < 6; j++)
                 {
-                    Plate.hight = 2.5f; // 2500
-                    Plate.width = 2.547;
-                    Plate.thickness = StandardPlateThickness[i] / 1000;
-                    Plate.name = "S" + std::to_string(i + 1) + "M";
-                    courceShellPlate.ShellPlates.push_back(Plate);
+                    courceShellPlate.ShellPlates.push_back(StandardPlate);
+                }
+                Plate.hight = 2.5f; // 2500
+                Plate.width = 2.547;
+                Plate.thickness = StandardPlateThickness[i] / 1000;
+                Plate.name = "S" + std::to_string(i + 1) + "M";
+                courceShellPlate.ShellPlates.push_back(Plate);
+                for (int j = 0; j < 6; j++)
+                {
+                    courceShellPlate.ShellPlates.push_back(StandardPlate);
                 }
             }
 
@@ -208,13 +408,21 @@ public:
             {
                 ShellPlate Plate;
 
-                for (int j = 0; j < 1; j++)
+                ShellPlate StandardPlate;
+
+                StandardPlate.hight = 2.5f; // 2500
+                StandardPlate.width = 10.f; // 10000
+                StandardPlate.thickness = StandardPlateThickness[i] / 1000;
+                StandardPlate.name = "S" + std::to_string(i + 1);
+
+                Plate.hight = 2.5f; // 2500
+                Plate.width = 2.547;
+                Plate.thickness = StandardPlateThickness[i] / 1000;
+                Plate.name = "S" + std::to_string(i + 1) + "M";
+                courceShellPlate.ShellPlates.push_back(Plate);
+                for (int j = 0; j < 12; j++)
                 {
-                    Plate.hight = 2.5f; // 2500
-                    Plate.width = 2.547;
-                    Plate.thickness = StandardPlateThickness[i] / 1000;
-                    Plate.name = "S" + std::to_string(i + 1) + "M";
-                    courceShellPlate.ShellPlates.push_back(Plate);
+                    courceShellPlate.ShellPlates.push_back(StandardPlate);
                 }
             }
 
@@ -232,7 +440,7 @@ public:
             std::cout << "Course " << i + 1 << ":\n";
             std::cout << "Plate Count " << courseShellPlates[i].ShellPlates.size() << ":\n";
 
-            for (auto &sp : courseShellPlates[i].ShellPlates)
+            for (auto &sp : courseShellPlates[0].ShellPlates)
             {
 
                 std::cout << "  Plate Name: " << sp.name << "\n";
@@ -254,7 +462,7 @@ public:
 
         // drawSprayNozzles(5);
         //          drawSprayNozzles(8);
-        //  drawAngleMarkers();
+        // drawAngleMarkers();
 
         // drawBottomManhole();
     }
@@ -633,20 +841,37 @@ private:
         glPopAttrib();
     }
 
-    void drawSurfaceGrid(float yB, float yT) const
+    void drawLine3D(
+        float x1, float y1, float z1,
+        float x2, float y2, float z2,
+        float r, float g, float b,
+        float width = 1.0f) const
     {
-        glPushAttrib(GL_LIGHTING_BIT);
+        glColor3f(r, g, b);
+        glLineWidth(width);
+
+        glBegin(GL_LINES);
+
+        glVertex3f(x1, y1, z1);
+        glVertex3f(x2, y2, z2);
+
+        glEnd();
+    }
+
+    void makeCourceLine(float yB, float yT) const
+    {
+        glPushAttrib(GL_ENABLE_BIT | GL_LINE_BIT);
         glDisable(GL_LIGHTING);
 
-        glColor3f(0.34f, 0.40f, 0.56f);
-        glLineWidth(1.0f);
-
+        const float radius = CYL_R + 0.01f;
         const float sectionHeight = 2.5f;
-        const float sectionWidth = 10.0f;
 
         for (int j = 0; j <= courseShellPlates.size(); j++)
         {
             float yy = yB + j * sectionHeight;
+
+            glColor3f(0.34f, 0.40f, 0.56f);
+            glLineWidth(1.0f);
 
             glBegin(GL_LINE_LOOP);
 
@@ -655,70 +880,103 @@ private:
                 float a = (float)i / SEG * 2.0f * M_PI;
 
                 glVertex3f(
-                    (CYL_R + 0.01f) * cosf(a),
+                    radius * cosf(a),
                     yy,
-                    (CYL_R + 0.01f) * sinf(a));
+                    radius * sinf(a));
             }
 
             glEnd();
         }
 
-        
+        glPopAttrib();
+    }
 
-        for (int j = 0; j < courseShellPlates.size(); j++)
+    float getCourseRadius(const CourceShellPlate &course) const
+    {
+        if (course.ShellPlates.empty())
+            return CYL_R;
+
+        return TankInnerDia / 2 + (course.ShellPlates.front().thickness);
+    }
+
+    void verticalPlateBoundaries(float yB, float yT) const
+    {
+        glPushAttrib(GL_ENABLE_BIT | GL_LINE_BIT | GL_CURRENT_BIT);
+        glDisable(GL_LIGHTING);
+
+        float currentY = yB;
+
+        for (size_t courseIndex = 0;
+             courseIndex < courseShellPlates.size();
+             ++courseIndex)
         {
-            float platethickness = 0;
-            CourceShellPlate csps = courseShellPlates[j];
-            ShellPlate sp = csps.ShellPlates[1];
-            platethickness = sp.thickness;
+            const auto &course = courseShellPlates[courseIndex];
 
-            float circumference = 2.0f * M_PI * TankInnerDia / 2 + platethickness;
+            if (course.ShellPlates.empty())
+                continue;
 
-            for (int i = 0; i < csps.ShellPlates.size(); i++)
+            const float courseHeight = course.ShellPlates.front().hight;
+            const float courseRadius = getCourseRadius(course);
+
+            const float halfPlateOffset =
+                course.ShellPlates.front().width * 0.5f;
+
+            float distance = (courseIndex % 2 == 1) ? halfPlateOffset : 0.0f;
+
+            for (const auto &plate : course.ShellPlates)
             {
-                float s = 0.0f;
-                float angle = s / CYL_R;
-                s += 1000;
+                const float angle = distance / courseRadius;
 
-                glBegin(GL_LINES);
+                const float x = courseRadius * cosf(angle);
+                const float z = courseRadius * sinf(angle);
 
-                glVertex3f(
-                    (CYL_R + 0.02f) * cosf(angle),
-                    yB,
-                    (CYL_R + 0.02f) * sinf(angle));
+                drawLine3D(
+                    x, currentY, z,
+                    x, currentY + courseHeight, z,
+                    0.34f, 0.40f, 0.56f,
+                    2.0f);
 
-                glVertex3f(
-                    (CYL_R + 0.02f) * cosf(angle),
-                    yB ,
-                    (CYL_R + 0.02f) * sinf(angle));
+                
 
-                glEnd();
+                const float centerDistance = distance + plate.width * 0.5f;
+                const float centerAngle = centerDistance / courseRadius;
+
+                const float textRadius = courseRadius + 0.03f;
+
+                glPushMatrix();
+
+                glTranslatef(
+                    textRadius * cosf(centerAngle),
+                    currentY + courseHeight * 0.5f,
+                    textRadius * sinf(centerAngle));
+
+                glRotatef(
+                    -centerAngle * 180.0f / (float)M_PI + 90.0f,
+                    0.0f, 1.0f, 0.0f);
+
+                glScalef(0.0025f, 0.0025f, 0.0025f);
+
+                glColor3f(1.0f, 1.0f, 1.0f);
+
+                for (char c : plate.name)
+                    glutStrokeCharacter(GLUT_STROKE_ROMAN, c);
+
+                glPopMatrix();
+
+                distance += plate.width;
             }
+
+            currentY += courseHeight;
         }
 
-        glColor3f(1.0f, 1.0f, 0.0f);
-
-        int panelIndex = 1;
-
-        // for (float s = 0.0f; s < circumference; s += sectionWidth)
-        // {
-        //     float startAngle = s / CYL_R;
-        //     float endAngle = (s + sectionWidth) / CYL_R;
-        //     float centerAngle = (startAngle + endAngle) * 0.5f;
-
-        //     float centerY = yB + sectionHeight * 0.5f;
-        //     float r = CYL_R + 0.08f;
-
-        //     char txt[16];
-        //     sprintf(txt, "S%d", 1);
-
-        //     draw3DText(
-        //         r * cosf(centerAngle),
-        //         centerY,
-        //         r * sinf(centerAngle),
-        //         txt);
-        // }
-
         glPopAttrib();
+    }
+
+    void drawSurfaceGrid(float yB, float yT) const
+    {
+       
+        makeCourceLine(yB, yT);
+
+        verticalPlateBoundaries(yB, yT);
     }
 };
