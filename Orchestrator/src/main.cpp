@@ -26,6 +26,7 @@ int main()
     Logger::getInstance().configure(Logger::LogLevel::INFO, "robot.log", true);
 
     Logger &log = Logger::getInstance();
+    StateManager sm;
 
     LOG_DEBUG("Main", "Starting up…");
     LOG_INFO("Main", "Robot initialised");
@@ -33,10 +34,10 @@ int main()
     LOG_ERROR("PowerModule", "Battery voltage critical");
  // Load the settings from a JSON file (if it exists)
     RobotStateData state;
-    loadJSON(state, "robot_state_test.json");
-    printState(state);
+    sm.loadJSON(state, "robot_state_test.json");
+    sm.printState(state);
 
-    state.lastUpdatedAt = nowISO();
+    state.lastUpdatedAt = sm.nowISO();
 
     state.connection.state = RobotConnectionState::FULLY_CONNECTED;
     state.connection.orinConnected = true;
@@ -58,8 +59,8 @@ int main()
     state.ndt.filterId = 2;
     state.inspection.surface = InspectionSurface::PIPE;
     const std::string outFile = "robot_state_test.json";
-    printState(state);
-    saveJSON(state, outFile);
+    sm.printState(state);
+    sm.saveJSON(state, outFile);
 
     Robot robot;
     robot.run();

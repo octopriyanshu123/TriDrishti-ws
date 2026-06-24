@@ -9,8 +9,18 @@
 #include <sstream>
 #include <limits>
 
+// StateManager.cpp
+StateManager::StateManager()
+{
+}
 
-static std::string nowISO()
+StateManager::~StateManager()
+{
+}
+
+
+
+static std::string StateManager::nowISO()
 {
     auto now = std::chrono::system_clock::now();
     auto tt = std::chrono::system_clock::to_time_t(now);
@@ -19,13 +29,13 @@ static std::string nowISO()
     return buf;
 }
 
-static void printBool(const std::string &label, bool v)
+static void StateManager::printBool(const std::string &label, bool v)
 {
     std::cout << "    " << std::left << std::setw(22) << label
               << (v ? "YES" : "NO") << "\n";
 }
 
-static void printSensorBlock(const std::string &name,
+static void StateManager::printSensorBlock(const std::string &name,
                              const RobotStateData::SensorFlags &f)
 {
     std::cout << "  [" << name << "]\n";
@@ -38,10 +48,10 @@ static void printSensorBlock(const std::string &name,
 //  Manual JSON serialiser  (no third-party lib)
 // ─────────────────────────────────────────────
 
-static std::string boolStr(bool v) { return v ? "true" : "false"; }
-static std::string quoted(const std::string &s) { return "\"" + s + "\""; }
+static std::string StateManager::boolStr(bool v) { return v ? "true" : "false"; }
+static std::string StateManager::quoted(const std::string &s) { return "\"" + s + "\""; }
 
-static std::string connStateStr(RobotConnectionState s)
+static std::string StateManager::connStateStr(RobotConnectionState s)
 {
     switch (s)
     {
@@ -56,7 +66,7 @@ static std::string connStateStr(RobotConnectionState s)
     }
     return "UNKNOWN";
 }
-static std::string runStateStr(RobotRunState s)
+static std::string StateManager::runStateStr(RobotRunState s)
 {
     switch (s)
     {
@@ -73,7 +83,7 @@ static std::string runStateStr(RobotRunState s)
     }
     return "UNKNOWN";
 }
-static std::string opModeStr(OperationMode m)
+static std::string StateManager::opModeStr(OperationMode m)
 {
     switch (m)
     {
@@ -86,7 +96,7 @@ static std::string opModeStr(OperationMode m)
     }
     return "UNKNOWN";
 }
-static std::string surfaceStr(InspectionSurface s)
+static std::string StateManager::surfaceStr(InspectionSurface s)
 {
     switch (s)
     {
@@ -102,13 +112,13 @@ static std::string surfaceStr(InspectionSurface s)
     return "UNKNOWN";
 }
 
-static std::string sensorJson(const std::string &indent,
+static std::string StateManager::sensorJson(const std::string &indent,
                               const RobotStateData::SensorFlags &f)
 {
     return indent + "{ \"initialised\": " + boolStr(f.initialised) + ", \"bypassed\": " + boolStr(f.bypassed) + ", \"calibrated\": " + boolStr(f.calibrated) + " }";
 }
 
-static void saveJSON(const RobotStateData &s, const std::string &path)
+static void StateManager::saveJSON(const RobotStateData &s, const std::string &path)
 {
     std::ofstream f(path);
     if (!f)
@@ -179,7 +189,7 @@ static void saveJSON(const RobotStateData &s, const std::string &path)
     std::cout << "\n  Saved to: " << path << "\n";
 }
 
-static void printState(const RobotStateData &s)
+static void StateManager::printState(const RobotStateData &s)
 {
     std::cout << "\n╔══════════════════════════════════════════╗\n";
     std::cout << "║         CURRENT ROBOT STATE              ║\n";
@@ -233,7 +243,7 @@ static void printState(const RobotStateData &s)
 
 // Extract the value for a key from one JSON object level.
 // Handles:  "key": "string"   "key": 1.23   "key": true/false
-static std::string jsonValue(const std::string& block, const std::string& key)
+static std::string StateManager::jsonValue(const std::string& block, const std::string& key)
 {
     std::string needle = "\"" + key + "\"";
     auto pos = block.find(needle);
@@ -256,7 +266,7 @@ static std::string jsonValue(const std::string& block, const std::string& key)
 }
 
 // Extract a nested  { ... }  block after "key":
-static std::string jsonBlock(const std::string& src, const std::string& key)
+static std::string StateManager::jsonBlock(const std::string& src, const std::string& key)
 {
     std::string needle = "\"" + key + "\"";
     auto pos = src.find(needle);
@@ -278,32 +288,32 @@ static float    parseFloat(const std::string& v) { return v.empty() ? 0.0f : std
 static int      parseInt  (const std::string& v) { return v.empty() ? 0    : std::stoi(v); }
 static uint64_t parseU64  (const std::string& v) { return v.empty() ? 0ull : std::stoull(v); }
 
-static RobotConnectionState parseConnState(const std::string& v) {
+static RobotConnectionState StateManager::parseConnState(const std::string& v) {
     if (v == "ORIN_CONNECTED")  return RobotConnectionState::ORIN_CONNECTED;
     if (v == "NDT_CONNECTED")   return RobotConnectionState::NDT_CONNECTED;
     if (v == "FULLY_CONNECTED") return RobotConnectionState::FULLY_CONNECTED;
     return RobotConnectionState::DISCONNECTED;
 }
-static RobotRunState parseRunState(const std::string& v) {
+static RobotRunState StateManager::parseRunState(const std::string& v) {
     if (v == "INITIALISED") return RobotRunState::INITIALISED;
     if (v == "RUNNING")     return RobotRunState::RUNNING;
     if (v == "FROZEN")      return RobotRunState::FROZEN;
     if (v == "ERROR")       return RobotRunState::ERROR;
     return RobotRunState::IDLE;
 }
-static OperationMode parseOpMode(const std::string& v) {
+static OperationMode StateManager::parseOpMode(const std::string& v) {
     if (v == "AUTOMATIC") return OperationMode::AUTOMATIC;
     if (v == "SEMI_AUTO") return OperationMode::SEMI_AUTO;
     return OperationMode::MANUAL;
 }
-static InspectionSurface parseSurface(const std::string& v) {
+static InspectionSurface StateManager::parseSurface(const std::string& v) {
     if (v == "CURVED") return InspectionSurface::CURVED;
     if (v == "PIPE")   return InspectionSurface::PIPE;
     if (v == "CUSTOM") return InspectionSurface::CUSTOM;
     return InspectionSurface::FLAT;
 }
 
-static void parseSensorFlags(const std::string& block,
+static void StateManager::parseSensorFlags(const std::string& block,
                               RobotStateData::SensorFlags& f)
 {
     f.initialised = parseBool(jsonValue(block, "initialised"));
@@ -313,7 +323,7 @@ static void parseSensorFlags(const std::string& block,
 
 // ── loadJSON ──────────────────────────────────────────────────
 
-static bool loadJSON(RobotStateData& s, const std::string& path)
+static bool StateManager::loadJSON(RobotStateData& s, const std::string& path)
 {
     std::ifstream f(path);
     if (!f) {

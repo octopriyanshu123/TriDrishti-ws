@@ -429,10 +429,10 @@ static void reshape(int w, int h)
 // ── entry point ──────────────────────────────────────────────
 int main(int argc, char **argv)
 {
-    // if (!initJoystick())
-    // {
-    //     return 1;
-    // }
+    if (!initJoystick())
+    {
+        return 1;
+    }
 
     glutInit(&argc, argv);
     quad = gluNewQuadric();

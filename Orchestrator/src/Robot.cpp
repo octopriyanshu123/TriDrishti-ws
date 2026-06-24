@@ -1,3 +1,4 @@
+#pragma once
 #include "Robot.hpp"
 #include "Controllers/ControllerManager.cpp"
 

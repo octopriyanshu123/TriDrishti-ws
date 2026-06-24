@@ -27,4 +27,6 @@ public:
     static void parseSensorFlags(const std::string &block, RobotStateData::SensorFlags &f);
 
     static bool loadJSON(RobotStateData &s, const std::string &path);
+    static void saveJSON(const RobotStateData &s, const std::string &path);
+
 };

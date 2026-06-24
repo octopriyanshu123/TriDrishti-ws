@@ -462,7 +462,7 @@ public:
 
         // drawSprayNozzles(5);
         //          drawSprayNozzles(8);
-        // drawAngleMarkers();
+        drawAngleMarkers();
 
         // drawBottomManhole();
     }

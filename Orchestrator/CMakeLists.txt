@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
-project(TriDrishti
-    VERSION     1.0.0
+project(TriDrishti VERSION 1.0.0
     DESCRIPTION "TriDrishti Robot Control System"
     LANGUAGES   CXX
 )
@@ -23,9 +22,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-
-
-
 find_package(Threads REQUIRED)
 
 
@@ -37,11 +33,14 @@ set(ROBOT_SOURCES
     src/Controllers/ProcessManager.cpp
 
     src/State/Logger.cpp
+    src/State/StateManager.cpp
+
+    
 
 )
 
 
-add_executable(robot ${ROBOT_SOURCES} ${ROBOT_HEADERS})
+add_executable(robot ${ROBOT_SOURCES})
 
 
 target_include_directories(robot

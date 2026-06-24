@@ -6,6 +6,7 @@
 #include <functional>
 #include <iostream>
 #include <stdexcept>
+#include "RobotState.hpp"
 
 // ─────────────────────────────────────────────
 //  Forward declarations
@@ -15,20 +16,6 @@ class ControllerManager;
 // ─────────────────────────────────────────────
 //  Enums
 // ─────────────────────────────────────────────
-enum class InspectionSurface
-{
-    FLAT,
-    CURVED,
-    PIPE,
-    CUSTOM
-};
-
-enum class OperationMode
-{
-    MANUAL,
-    AUTOMATIC,
-    SEMI_AUTO
-};
 
 enum class RobotState
 {
