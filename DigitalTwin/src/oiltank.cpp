@@ -56,7 +56,7 @@ void updateCylinderPose(
 }
 
 // ── window ───────────────────────────────────────────────────
-static int W = 1280, H = 800;
+static int W = 1920, H = 1080;
 
 // ── scene objects ────────────────────────────────────────────
 static Tank tank;
@@ -172,7 +172,6 @@ static void display()
     drawGrid();
     Axis("world", 1.0f).draw();
     drawTank();
-    panel.draw();
     glutSwapBuffers();
 }
 static bool initJoystick()

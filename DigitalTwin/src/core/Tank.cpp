@@ -458,13 +458,13 @@ public:
         drawOuterWall(yB, yT);
         drawCaps(yB, yT);
         drawSurfaceGrid(yB, yT);
-        // drawStair();
+        drawStair();
 
-        // drawSprayNozzles(5);
-        //          drawSprayNozzles(8);
+        drawSprayNozzles(5);
+                 drawSprayNozzles(8);
         drawAngleMarkers();
 
-        // drawBottomManhole();
+        drawBottomManhole();
     }
 
     void setRadius(float radius)
