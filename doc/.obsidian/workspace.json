@@ -8,71 +8,33 @@
         "type": "tabs",
         "children": [
           {
-            "id": "b916a314b16a9205",
+            "id": "b50e3bfaa9cf656b",
+            "type": "leaf",
+            "state": {
+              "type": "excalidraw",
+              "state": {
+                "file": "Excalidraw Control Flow/Robot_FlowChart.md"
+              },
+              "icon": "excalidraw-icon",
+              "title": "Robot_FlowChart"
+            }
+          },
+          {
+            "id": "06090b0cc79d742f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "State/Logger.md",
+                "file": "i2w.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Logger"
-            }
-          },
-          {
-            "id": "c56d599080eb87b7",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw Control Flow/UI_FlowChart.md"
-              },
-              "icon": "lucide-ghost",
-              "title": "excalidraw"
-            }
-          },
-          {
-            "id": "9b86ae19e51fac92",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "DIgitalTwin/Mobile Robot Kinematics.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Mobile Robot Kinematics"
-            }
-          },
-          {
-            "id": "c1007b8fc813df5a",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw Control Flow/UI_FlowChart.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "UI_FlowChart"
-            }
-          },
-          {
-            "id": "96d1446639e0b914",
-            "type": "leaf",
-            "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Excalidraw Control Flow/UI_FlowChart.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "UI_FlowChart"
+              "title": "i2w"
             }
           }
         ],
-        "currentTab": 4
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -104,7 +66,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "Robot",
+                "query": "tag:#Logger",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -234,22 +196,34 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "96d1446639e0b914",
+  "active": "06090b0cc79d742f",
   "lastOpenFiles": [
-    "DIgitalTwin/Mobile Robot Kinematics.md",
-    "Robot Interfeace.md",
-    "todo.md",
     "State/TF Trail.md",
+    "State/State Manager.md",
+    "State/Logger.md",
     "RobotFramework/RCF Robot Control Flow.md",
+    "Operations/Behaviour Tree.md",
+    "HAL/Hardware Abstraction Layer.md",
+    "Untitled.md",
+    "Untitled 1.md",
+    "Excalidraw/Drawing 2026-07-15 14.52.37.excalidraw.md",
+    "Excalidraw",
+    "Excalidraw Control Flow/Robot_FlowChart.md",
+    "MissionManager/Story Line.md",
+    "i2w.md",
+    "Excalidraw Control Flow/UI_FlowChart.md",
+    "Untitled.base",
+    "MissionManager/Robot.md",
+    "MissionManager/Logger.md",
+    "Orchestrator/Robot Interfeace.md",
+    "MissionManager",
+    "DIgitalTwin/Mobile Robot Kinematics.md",
+    "todo.md",
     "DIgitalTwin/TF.md",
     "DIgitalTwin/Drawing 2026-06-05 13.00.07.excalidraw.md",
     "Controllers/Linear Actuator Controller.md",
-    "Excalidraw Control Flow/Robot_FlowChart.md",
     "robot_orchestrator_lld.html",
     "Unconfirmed 12049.crdownload",
-    "State/Logger.md",
-    "State/State Manager.md",
-    "Excalidraw Control Flow/UI_FlowChart.md",
     "png/Pasted Image 20260602140550_526.png",
     "png/Pasted Image 20260528235623_624.png",
     "Pasted Image 20260605160602_194.png",
@@ -262,22 +236,11 @@
     "Controllers/Controller Manager.md",
     "HAL/Leaser Profiling Sensor.md",
     "Excalidraw/Drawing 2026-06-04 18.38.33.excalidraw.md",
-    "Excalidraw",
     "HAL/STM.md",
     "Excalidraw Control Flow/Pasted Image 20260528235623_624.png",
-    "Operations/Behaviour Tree.md",
     "Operations/Teleop.md",
     "Excalidraw Control Flow/Pasted Image 20260602140550_526.png",
     "HAL",
-    "RobotFramework",
-    "State",
-    "i2w",
-    "HAL/Lifecycle Base Class.md",
-    "Excalidraw/Drawing 2026-06-02 10.27.06.excalidraw.md",
-    "HAL/Hardware Abstraction Layer.md",
-    "Excalidraw/Hardware Abstraction Layer.md",
-    "Excalidraw/Lifecycle Base Class.md",
-    "Excalidraw/Controller Manager.md",
-    "Excalidraw/Linear Actuator Controller.md"
+    "RobotFramework"
   ]
 }
