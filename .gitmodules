@@ -1,0 +1,9 @@
+[submodule "src/crawler-i2w-msgs"]
+	path = src/crawler-i2w-msgs
+	url = https://github.com/octobotics/crawler-i2w-msgs.git
+[submodule "src/i2w"]
+	path = src/i2w
+	url = https://github.com/octobotics/i2w.git
+[submodule "src/TriDrishti-ControllerNode"]
+	path = src/TriDrishti-ControllerNode
+	url = https://github.com/octobotics/TriDrishti-ControllerNode.git
