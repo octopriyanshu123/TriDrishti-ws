@@ -1,2 +1,0 @@
-
-Wheel Thickness 40

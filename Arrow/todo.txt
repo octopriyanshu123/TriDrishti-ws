@@ -1,3 +1,0 @@
-1 Session manager
-2 Action 
-3 Service
