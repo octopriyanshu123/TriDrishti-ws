@@ -7,3 +7,9 @@
 [submodule "src/TriDrishti-ControllerNode"]
 	path = src/TriDrishti-ControllerNode
 	url = https://github.com/octobotics/TriDrishti-ControllerNode.git
+[submodule "myactuator-cpf-i2w"]
+	path = myactuator-cpf-i2w
+	url = https://github.com/octobotics/myactuator-cpf-i2w.git
+[submodule "src/myactuator-cpf-i2w"]
+	path = src/myactuator-cpf-i2w
+	url = https://github.com/octobotics/myactuator-cpf-i2w.git
