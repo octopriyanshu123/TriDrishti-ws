@@ -13,3 +13,6 @@
 [submodule "src/myactuator-cpf-i2w"]
 	path = src/myactuator-cpf-i2w
 	url = https://github.com/octobotics/myactuator-cpf-i2w.git
+[submodule "test/TriDrishtiTestNode"]
+	path = test/TriDrishtiTestNode
+	url = https://github.com/octopriyanshu123/TriDrishtiTestNode.git
